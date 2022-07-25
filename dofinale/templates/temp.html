@@ -1,0 +1,10 @@
+<!-- 질문 목록 -->
+{% if userpost_list %}
+    <ul>
+    {% for userpost in userpost_list %}
+        <li><a href=" {{ url_for('board.detail', userpost_id=userpost.id) }}/">{{ userpost.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>게시글이 없습니다.</p>
+{% endif %}

@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect, secure_filename
 
 from dofinale.forms import UserCreateForm
-from dofinale.models import Members
+from dofinale.models import *
 from dofinale import db
 
 bp = Blueprint('main', __name__, url_prefix='/')
@@ -18,7 +18,7 @@ def load_logged_in_user():
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('board._list'))
 
 @bp.route('/login',methods=('GET','POST'))
 def login():
