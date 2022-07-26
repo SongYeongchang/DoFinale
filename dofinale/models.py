@@ -1,6 +1,7 @@
 from dofinale import db
 from datetime import datetime
 
+
 collation = 'utf8mb4_unicode_ci'
 
 class Members(db.Model):
