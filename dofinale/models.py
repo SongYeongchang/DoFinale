@@ -5,11 +5,11 @@ collation = 'utf8mb4_unicode_ci'
 
 class Members(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    userid = db.Column(db.String(20, collation), nullable=False)
-    userpw = db.Column(db.String(20, collation), nullable=False)
+    userid = db.Column(db.String(20, collation), unique=True, nullable=False)
+    userpw = db.Column(db.Text(None, collation), nullable=False)
     name = db.Column(db.String(20, collation), nullable=False)
-    email = db.Column(db.String(30, collation), nullable=False)
-    phone = db.Column(db.String(20, collation), nullable=False)
+    email = db.Column(db.String(30, collation), unique=True, nullable=False)
+    phone = db.Column(db.String(20, collation), unique=True, nullable=False)
     address = db.Column(db.String(50, collation), nullable=False)
     scalp_type = db.Column(db.String(20, collation))
     signup_date = db.Column(db.DateTime, default = datetime.utcnow())

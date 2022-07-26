@@ -17,10 +17,16 @@ def create_app():
     migrate.init_app(app, db)
 
     from . import models
-
-    from .views import main_views, board_views, comment_views
+    
+    # 블루프린트
+    from .views import main_views, post_views, comment_views, auth_views
     app.register_blueprint(main_views.bp)
-    app.register_blueprint(board_views.bp)
+    app.register_blueprint(post_views.bp)
     app.register_blueprint(comment_views.bp)
+    app.register_blueprint(auth_views.bp)
+
+    # 필터
+    from .filter import format_datetime
+    app.jinja_env.filters['datetime'] = format_datetime
 
     return app

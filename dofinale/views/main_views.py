@@ -1,10 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, session, g
-from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect, secure_filename
 
-from dofinale.forms import UserCreateForm
-from dofinale.models import *
-from dofinale import db
+from ..models import Members
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -18,7 +15,7 @@ def load_logged_in_user():
 
 @bp.route('/')
 def index():
-    return redirect(url_for('board._list'))
+    return redirect(url_for('post._list'))
 
 @bp.route('/login',methods=('GET','POST'))
 def login():
@@ -41,27 +38,6 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('main.index'))
-
-@bp.route('/signup',methods=('GET','POST'))
-def signup():
-    form = UserCreateForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        user = Members.query.filter_by(userid=form.userid.data).first()
-        if not user:
-            user = Members(userid = form.userid.data,
-                           userpw = form.userpw1.data,
-                           name = form.name.data,
-                           email = form.email.data,
-                           phone = form.phone.data,
-                           address = form.address.data
-                           )
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('main.login'))
-        else:
-            print('이미 존재하는 유저입니다.')
-
-    return render_template('signup.html',form=form)
 
 @bp.route('/fileUpload', methods=['GET','POST'])
 def upload_file():
