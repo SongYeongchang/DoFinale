@@ -6,3 +6,7 @@
 ```
 pip install -r requirements.txt
 ```
+## 패키지 추가될 경우 requirements.txt 업데이트 하는 방법
+```
+pip freeze > requirements.txt
+```
