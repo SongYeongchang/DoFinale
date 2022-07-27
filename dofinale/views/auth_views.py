@@ -30,6 +30,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
+            print('로그인 완료')
             return redirect(url_for('main.index'))
         flash(error)
     return render_template('auth/login.html', form=form)
@@ -37,9 +38,10 @@ def login():
 @bp.route('/logout/')
 def logout():
     session.clear()
+    print('로그아웃 완료')
     return redirect(url_for('main.index'))
 
-@bp.route('/signup', methods=('GET', 'POST'))
+@bp.route('/signup/', methods=('GET', 'POST'))
 def signup():
     form = UserCreateForm()
     if request.method == 'POST' and form.validate_on_submit():
@@ -54,7 +56,17 @@ def signup():
                            )
             db.session.add(user)
             db.session.commit()
+            print('가입 완료')
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 유저입니다.')
     return render_template('auth/signup.html', form=form)
+
+@bp.route('/deleteuser/', methods=('GET', 'POST'))
+def delete_user():
+    if request.method == 'POST':
+        db.session.delete(g.user)
+        db.session.commit()
+        print('탈퇴 처리 완료')
+        return redirect(url_for('main.index'))
+    return render_template('auth/delete_user.html')

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -12,7 +12,7 @@
     <!-- MDB -->
     <link rel="stylesheet" href="{{ url_for('static', 'css/mdb.min.css') }}" />
     <!-- Custom styles -->
-    <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', 'css/style.css') }}" />
 </head>
 <body>
         <!--Main Navigation-->
@@ -87,7 +87,7 @@
       <!-- Background image -->
       <div id="intro" class="bg-image vh-100 shadow-1-strong">
         <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
-          <source class="h-100" src="static/video/istockphoto-1306252776-640_adpp_is.mp4" type="video/mp4" />
+          <source class="h-100" src="{{ url_for('static', 'videos/istockphoto-1306252776-640_adpp_is.mp4') }}" type="video/mp4" />
         </video>
         <div class="mask"     style="
         background: linear-gradient(

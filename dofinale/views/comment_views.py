@@ -9,7 +9,7 @@ from ..models import Userpost, Usercomment
 bp = Blueprint('comment', __name__, url_prefix='/comment')
 
 
-@bp.route('/create/<int:userpost_id>', methods=('POST',))
+@bp.route('/create/<int:userpost_id>/', methods=('POST',))
 def create(userpost_id):
     form = UserCommentForm()
     userpost = Userpost.query.get_or_404(userpost_id)

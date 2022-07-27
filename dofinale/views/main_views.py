@@ -9,6 +9,10 @@ bp = Blueprint('main', __name__, url_prefix='/')
 def index():
     return redirect(url_for('post._list'))
 
+@bp.route('/cover')
+def cover():
+    return render_template('full-video-cover.html')
+
 @bp.route('/fileUpload', methods=['GET','POST'])
 def upload_file():
     if request.method == 'POST':

@@ -6,7 +6,7 @@ collation = 'utf8mb4_unicode_ci'
 class Members(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     userid = db.Column(db.String(20, collation), unique=True, nullable=False)
-    userpw = db.Column(db.BINARY(60), nullable=False)
+    userpw= db.Column(db.BINARY(60), nullable=False)
     name = db.Column(db.String(20, collation), nullable=False)
     email = db.Column(db.String(30, collation), unique=True, nullable=False)
     phone = db.Column(db.String(20, collation), unique=True, nullable=False)
