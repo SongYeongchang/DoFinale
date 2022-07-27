@@ -32,7 +32,8 @@
         {{ form.csrf_token }}
         {% include "form_errors.html" %}
         <div class="mb-3">
-            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+            <textarea {% if not g.user %}disabled{% endif %}
+                    name="content" id="content" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" value="댓글 등록" class="btn btn-primary">
     </form>

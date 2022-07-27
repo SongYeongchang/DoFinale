@@ -7,7 +7,11 @@ bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    return redirect(url_for('post._list'))
+    return render_template('not_yet/fvcover.html')
+
+# @bp.route('/cover/')
+# def cover():
+#     return render_template('not_yet/fvcover.html')
 
 # 추후 다시 구현 예정
 # @bp.route('/fileUpload', methods=['GET','POST'])

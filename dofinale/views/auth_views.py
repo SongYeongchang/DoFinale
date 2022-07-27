@@ -9,6 +9,7 @@ from dofinale.models import Members
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+# 로그인이 필요한 기능에 적용
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(*args, **kwargs):
@@ -80,6 +81,7 @@ def delete_user():
     if request.method == 'POST':
         db.session.delete(g.user)
         db.session.commit()
+        session.clear()
         print('탈퇴 처리 완료')
         return redirect(url_for('main.index'))
     return render_template('auth/delete_user.html')

@@ -6,13 +6,13 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Material Design for Bootstrap</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />-->
     <!-- Google Fonts Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />-->
     <!-- MDB -->
-    <link rel="stylesheet" href="{{ url_for('static', 'css/mdb.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/not_yet/mdb.min.css') }}" />
     <!-- Custom styles -->
-    <link rel="stylesheet" href="{{ url_for('static', 'css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reveal.css') }}" />
 </head>
 <body>
         <!--Main Navigation-->
@@ -22,6 +22,8 @@
         @media (min-width: 992px) {
           #intro {
             margin-top: -58.59px;
+            min-width: 100%;
+            min-height: 100%;
           }
         }
 
@@ -85,21 +87,40 @@
       <!-- Navbar -->
 
       <!-- Background image -->
-      <div id="intro" class="bg-image vh-100 shadow-1-strong">
+      <div id="intro" class="bg-blue h-100 shadow-1-strong">
         <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
-          <source class="h-100" src="{{ url_for('static', 'videos/istockphoto-1306252776-640_adpp_is.mp4') }}" type="video/mp4" />
+          <source class="h-100" src="{{ url_for('static', filename='videos/istockphoto-1306252776-640_adpp_is.mp4') }}" type="video/mp4" />
         </video>
         <div class="mask"     style="
         background: linear-gradient(
           0deg,
-          rgba(100, 10, 50, 0.3),
-          rgba(200, 10, 150, 1) 100%
+          rgba(100, 100, 100, 1),
+          rgba(100, 100, 100, 1) 50%
         );
+        background-image: url({{ url_for('static', filename='images/scene_bg_dot.png') }});
+        background-position-x: initial;
+        background-position-y: initial;
+        background-size: initial;
+        background-repeat-x: initial;
+        background-repeat-y: initial;
+        background-attachment: initial;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: initial;
       ">
           <div class="container d-flex align-items-center justify-content-center text-center h-100">
-            <div class="text-white">
-              <h1 class="mb-3">Learn Bootstrap 5 with MDB</h1>
-              <h5 class="mb-4">Best & free guide of responsive web design</h5>
+            <div class="box">
+              <div class="title">
+                <span class="block"></span>
+                <h1>두피날레<span></span></h1>
+              </div>
+
+              <div class="role">
+                <div class="block"></div>
+                <p>AI 기반 두피 유형 진단 서비스</p>
+              </div>
+            </div>
+          </div>
               <a
                 class="btn btn-outline-light btn-lg m-2"
                 href="https://www.youtube.com/watch?v=c9B4TPnak1A"
@@ -389,8 +410,8 @@
     </footer>
     <!--Footer-->
     <!-- MDB -->
-    <script type="text/javascript" src="static/js/mdb.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Custom scripts -->
-    <script type="text/javascript" src="static/js/script.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
