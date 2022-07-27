@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, g
 from werkzeug.utils import redirect
 
 from .. import db
+from ..views.auth_views import login_required
 from ..forms import UserPostForm, UserCommentForm
 from ..models import Userpost
 
@@ -17,10 +18,11 @@ def _list():
     return render_template('post/post_list.html', userpost_list=userpost_list)
 
 @bp.route('/create/', methods=('GET', 'POST'))
+@login_required
 def create():
     form = UserPostForm()
     if request.method == 'POST' and form.validate_on_submit():
-        userpost = Userpost(subject=form.subject.data, content=form.content.data, create_date=datetime.now())
+        userpost = Userpost(subject=form.subject.data, content=form.content.data, create_date=datetime.now(), user=g.user)
         db.session.add(userpost)
         db.session.commit()
         return redirect(url_for('main.index'))

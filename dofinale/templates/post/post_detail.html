@@ -30,20 +30,7 @@
     <!-- 댓글 등록 -->
     <form action="{{ url_for('comment.create', userpost_id=userpost.id) }}" method="post" class="my-3">
         {{ form.csrf_token }}
-        <!-- 오류표시 Start -->
-        {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            {% for field, errors in form.errors.items() %}
-            <strong>{{ form[field].label }}</strong>
-            <ul>
-                {% for error in errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endfor %}
-        </div>
-        {% endif %}
-        <!-- 오류표시 End -->
+        {% include "form_errors.html" %}
         <div class="mb-3">
             <textarea name="content" id="content" class="form-control" rows="10"></textarea>
         </div>

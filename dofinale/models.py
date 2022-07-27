@@ -14,17 +14,21 @@ class Members(db.Model):
     scalp_type = db.Column(db.String(20, collation))
     signup_date = db.Column(db.DateTime, default = datetime.utcnow())
 
-class Boards(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    board_name = db.Column(db.String(20, collation), nullable=False)
+# 게시판 모델은 당장 오류가 있어 나중에 다시 추가할 예정
+# class Boards(db.Model):
+#     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+#     board_name = db.Column(db.String(20, collation), nullable=False)
 
 class Userpost(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id', ondelete='CASCADE'))
-    boards = db.relationship('Boards', backref=db.backref('post_set', cascade='all, delete-orphan'))
+    # 게시판 모델과 연동은 나중에 다시 구현할 예정
+    # boards_id = db.Column(db.Integer, db.ForeignKey('boards.id', ondelete='CASCADE'), nullable=True, server_default='1')
+    # boards = db.relationship('Boards', backref=db.backref('post_set', cascade='all, delete-orphan'))
     subject = db.Column(db.String(200, collation), nullable=False)
     content = db.Column(db.Text(None, collation), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('members.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('Members', backref=db.backref('post_set'))
 
 class Usercomment(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
@@ -32,3 +36,5 @@ class Usercomment(db.Model):
     userpost = db.relationship('Userpost', backref=db.backref('comment_set', cascade='all, delete-orphan'))
     content = db.Column(db.Text(None, collation), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('members.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('Members', backref=db.backref('comment_set'))
