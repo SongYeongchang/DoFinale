@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request, session
+from flask import Blueprint, render_template, url_for, request, session, jsonify
 from werkzeug.utils import redirect, secure_filename
 
 
@@ -7,7 +7,17 @@ bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    return render_template('not_yet/fvcover.html')
+    # return render_template('not_yet/fvcover.html')
+    return redirect(url_for('post._list'))
+
+@bp.route('/chatbot',methods=('POST','GET'))
+def chatbot():
+    req = request.get_json(force=True)
+    print(req)
+    # return jsonify(fulfillmentText='챗봇 접속 성공')
+    return jsonify({
+     "text": "Hello"
+    })
 
 # @bp.route('/cover/')
 # def cover():
