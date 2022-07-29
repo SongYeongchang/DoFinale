@@ -7,9 +7,16 @@
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ userpost.content }}</div>
             <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2">
-                    {{ userpost.create_date|datetime }}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">{{ userpost.user.userid }}</div>
+                    <div>{{ userpost.create_date|datetime }}</div>
                 </div>
+            </div>
+            <div class="my-3">
+            {% if g.user == userpost.user %}
+            <a href="{{ url_for('post.modify', userpost_id=userpost.id) }}"
+               class="btn btn-sm btn-outline-secondary">수정</a>
+            {% endif %}
             </div>
         </div>
     </div>
@@ -20,8 +27,9 @@
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
             <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2">
-                    {{ comment.create_date|datetime }}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">{{ comment.user.userid }}</div>
+                    <div>{{ comment.create_date|datetime }}</div>
                 </div>
             </div>
         </div>

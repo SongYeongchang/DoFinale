@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, url_for, g
+from flask import Blueprint, render_template, request, url_for, g, flash
 from werkzeug.utils import redirect
 
 from .. import db
@@ -15,7 +15,6 @@ def _list():
     page = request.args.get('page', type=int, default=1)  # 페이지
     userpost_list = Userpost.query.order_by(Userpost.create_date.desc())
     userpost_list = userpost_list.paginate(page, per_page=10)
-    print(url_for('static',filename='images/chatbot_icon.png'))
     return render_template('post/post_list.html', userpost_list=userpost_list)
 
 @bp.route('/create/', methods=('GET', 'POST'))

@@ -16,21 +16,6 @@
 <!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/headers.css') }}">-->
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <script type="application/javascript">
-        window.tiledeskSettings=
-        {
-            projectid: "62e219871a3c6e001ada67bf"
-        };
-        (function(d, s, id) {
-            var w=window; var d=document; var i=function(){i.c(arguments);};
-            i.q=[]; i.c=function(args){i.q.push(args);}; w.Tiledesk=i;
-            var js, fjs=d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js=d.createElement(s);
-            js.id=id; js.async=true; js.src="https://widget.tiledesk.com/v5/launch.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document,'script','tiledesk-jssdk'));
-    </script>
     <title>두피 예측 서비스</title>
 </head>
 <body>
@@ -40,7 +25,7 @@
 {% endblock %}
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
 <!-- Dialogflow 챗봇 -->
-<!--{% include "chatbot.html" %}-->
+{% include "chatbot.html" %}
 <!-- Bootstrap JS -->
 <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
 </body>

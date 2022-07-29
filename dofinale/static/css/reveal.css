@@ -41,7 +41,7 @@
 }
 .container .box .title h1 {
   font-family: "Poppins";
-  color: #fff;
+  color: rgba(0,0,0,.9);
   font-size: 42px;
   -webkit-animation: mainFadeIn 2s forwards;
   -o-animation: mainFadeIn 2s forwards;
@@ -91,7 +91,7 @@
   opacity: 0;
   font-weight: 400;
   font-family: "Lato";
-  color: #ffffff;
+  color: rgba(0,0,0,.85);
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;

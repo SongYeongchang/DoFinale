@@ -1,23 +1,10 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-{% if g.user == None %}
-
-<br>로그인을 먼저 해주세요
-
-{% else %}
-
-<form method="post" action="{{ url_for('main.upload_file') }}" enctype="multipart/form-data">
-
+<form method="post" action="{{ url_for('service.service') }}" enctype="multipart/form-data">
     <div class="form-group mx-sm-5 mb-5 my-5">
       <label for="formFile" class="form-label">이미지를 업로드하세요.</label>
       <input class="form-control" type="file" id="formFile" name="file">
       <button type="submit" class="btn btn-primary my-2">사진 전송</button>
     </div>
-
 </form>
-
-{% endif %}
-
 {% endblock %}
