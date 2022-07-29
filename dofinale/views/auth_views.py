@@ -83,5 +83,5 @@ def delete_user():
         db.session.commit()
         session.clear()
         print('탈퇴 처리 완료')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.intro'))
     return render_template('auth/delete_user.html')
