@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
 from config import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, SECRET_KEY
 
 db = SQLAlchemy()

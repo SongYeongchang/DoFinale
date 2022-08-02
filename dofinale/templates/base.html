@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>두피 예측 서비스</title>
     <!-- Font Awesome -->
 <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />-->
     <!-- Google Fonts Roboto -->
@@ -15,18 +16,21 @@
     <!-- Headers -->
 <!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/headers.css') }}">-->
     <!-- Custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cover.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <title>두피 예측 서비스</title>
 </head>
-<body>
-{% include "navbar.html" %}
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-{% block content %}
-{% endblock %}
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
-<!-- Dialogflow 챗봇 -->
-{% include "chatbot.html" %}
-<!-- Bootstrap JS -->
-<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<body class="d-flex h-100 text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    {% include "header.html" %}
+    <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+    {% block content %}
+    {% endblock %}
+    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+        <footer class="mt-auto text-white-50">
+            <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+        </footer>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>

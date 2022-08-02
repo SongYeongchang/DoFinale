@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, url_for, request, session, jsonify
 from werkzeug.utils import redirect, secure_filename
 
-from ..views.auth_views import login_required
-from ..ptmodel import Image_transformer, Diagnosis
+from dofinale.views.auth_views import login_required
+from dofinale.ptmodel import Image_transformer, Diagnosis
 
 bp = Blueprint('service', __name__, url_prefix='/service')
 model_path = './model'
@@ -16,5 +16,7 @@ def service():
         print(f.filename)
         f.save(secure_filename(f.filename))
         result = Diagnosis(model_path,secure_filename(f.filename))
-        return render_template('fileup.html', result=result)
+        print(result)
+        print(type(result))
+        return redirect(url_for('chatbot.chatbot', result=result[-1]))
     return render_template('fileup.html')
