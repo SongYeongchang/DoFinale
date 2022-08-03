@@ -1,11 +1,24 @@
 import os.path
 
-from flask import Blueprint, render_template, url_for, request, session, jsonify
+from flask import Blueprint, render_template, url_for, request, session, jsonify, g
 import json
 from geopy.geocoders import Nominatim # 가까운 병원 위경도 값으로 찾기
 from haversine import haversine
 
+from dofinale.views.auth_views import login_required
+from dofinale.models import Members
+
+from dofinale.views.service_views import gg
+
 bp = Blueprint('chatbot', __name__, url_prefix='/chatbot')
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = Members.query.get(user_id)
 
 def get_lat_and_log(address):
     '''
@@ -27,13 +40,34 @@ def get_lat_and_log(address):
         print(address,'에러!!!')
         return (0.0,0.0)
 
-@bp.route('/<result>',methods=('POST','GET'))
-def chatbot(result):
+@bp.route('/',methods=('POST','GET'))
+def chatbot():
     # 사용자 두피 상태 진단 예측 결과
-    scalp_type_result = result # 진단결과 붙일때 마지막 func()[-1]
+    # print(g.user.userid)
 
+    # print(scalp_type_result)
     # 사용자가 챗봇에 입력 시 데이터 받기
     req = request.get_json(force=True)
+    print('접속 성공')
+    try:
+        print("gg>",gg)
+        scalp_type_result=gg[0]
+        # scalp_type_result_all=''
+        # for i in gg:
+        #     scalp_type_result_all += i
+        # scalp_type_result = gg[-1]
+        # for i in gg:
+        #     gg.remove(i)
+        # user_id = session.get('user_id')
+        # if user_id is None:
+        #     g.user = None
+        # else:
+        #     g.user = Members.query.get(user_id)
+        # scalp_type_result = g.user.scalp_type  # 진단결과 붙일때 마지막 func()[-1]
+    except:
+        print('g.user 실패')
+        scalp_type_result = '읽기 실패'
+    print(scalp_type_result)
     # print(req)  # intent의 display name으로 구분해서 대응하기
     # print("쿼리텍스트 > "+req['queryResult']['queryText'])
     # print("인텐트 이름:"+req['queryResult']['intent']['displayName']) # Default Fallback Intent
@@ -160,7 +194,7 @@ def chatbot(result):
                             "subtitle": products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['line'],
                             "image": {
                               "src": {
-                                "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['image']
+                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['image']
                               }
                             },
                             "type": "info",
@@ -172,7 +206,7 @@ def chatbot(result):
                             "title": products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['product_name'],
                             "image": {
                               "src": {
-                                "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['image']
+                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['image']
                               }
                             }
                           }
@@ -185,7 +219,7 @@ def chatbot(result):
                           {
                               "image": {
                                   "src": {
-                                      "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['의사추천'][0]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][0]['image']
                                   }
                               },
                               "title": products['scalp_type'][scalp_type_result]['의사추천'][0]['product_name'],
@@ -196,7 +230,7 @@ def chatbot(result):
                               "subtitle": products['scalp_type'][scalp_type_result]['의사추천'][1]['line'],
                               "image": {
                                   "src": {
-                                      "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['의사추천'][1]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][1]['image']
                                   }
                               },
                               "title": products['scalp_type'][scalp_type_result]['의사추천'][0]['product_name'],
@@ -206,7 +240,7 @@ def chatbot(result):
                               "type": "info",
                               "image": {
                                   "src": {
-                                      "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['의사추천'][2]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][2]['image']
                                   }
                               },
                               "title": products['scalp_type'][scalp_type_result]['의사추천'][2]['product_name'],
@@ -222,7 +256,7 @@ def chatbot(result):
                                 "type": "info",
                                 "image": {
                                     "src": {
-                                        "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['image']
                                     }
                                 },
                                 "subtitle": products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['line'],
@@ -231,7 +265,7 @@ def chatbot(result):
                             {
                                 "image": {
                                     "src": {
-                                        "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['화해 랭킹순'][1]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][1]['image']
                                     }
                                 },
                                 "type": "info",
@@ -242,7 +276,7 @@ def chatbot(result):
                                 "type": "info",
                                 "image": {
                                     "src": {
-                                        "rawUrl": './static/images/products/'+products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['image']
                                     }
                                 },
                                 "title": products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['product_name'],
