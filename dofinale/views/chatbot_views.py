@@ -1,4 +1,4 @@
-import os.path
+import os.path, copy
 
 from flask import Blueprint, render_template, url_for, request, session, jsonify, g
 import json
@@ -51,7 +51,13 @@ def chatbot():
     print('접속 성공')
     try:
         print("gg>",gg)
-        scalp_type_result=gg[0]
+        print('gg[0]',gg[-1])
+        print('gg[0] type',type(gg[-1]))
+        print('gg[0] id',id(gg[-1]))
+        scalp_type_result=gg[-1]
+        print('scalp_type_result',scalp_type_result)
+        # gg.remove(gg[-1])
+
         # scalp_type_result_all=''
         # for i in gg:
         #     scalp_type_result_all += i
