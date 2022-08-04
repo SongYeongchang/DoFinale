@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-3">
-    <table class="table">
+    <table class="table table-warning">
         <thead>
-        <tr class="text-center table-dark">
+        <tr class="text-center">
             <th>번호</th>
             <th style="width:50%">제목</th>
             <th>글쓴이</th>
@@ -14,9 +14,9 @@
         {% if userpost_list %}
         {% for userpost in userpost_list.items %}
         <tr class="text-center">
-            <td >{{ userpost_list.total - ((userpost_list.page-1) * userpost_list.per_page) - loop.index0 }}</td>
+            <td>{{ userpost_list.total - ((userpost_list.page-1) * userpost_list.per_page) - loop.index0 }}</td>
             <td class="text-start">
-                <a href=" {{ url_for('post.detail', userpost_id=userpost.id) }}/">{{ userpost.subject }}</a>
+                <a class="table" href=" {{ url_for('post.detail', userpost_id=userpost.id) }}/">{{ userpost.subject }}</a>
                 {% if userpost.comment_set|length > 0 %}
                 <span class="text-danger small mx-2">{{ userpost.comment_set|length }}</span>
                 {% endif %}

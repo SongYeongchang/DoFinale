@@ -4,7 +4,7 @@
     <!-- 게시물 -->
     <h2 class="border-bottom py-2">{{ userpost.subject }}</h2>
     <div class="card my-3">
-        <div class="card-body">
+        <div class="card-body bg-dark">
             <div class="card-text" style="white-space: pre-line;">{{ userpost.content }}</div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
@@ -12,19 +12,13 @@
                     <div>{{ userpost.create_date|datetime }}</div>
                 </div>
             </div>
-            <div class="my-3">
-            {% if g.user == userpost.user %}
-            <a href="{{ url_for('post.modify', userpost_id=userpost.id) }}"
-               class="btn btn-sm btn-outline-secondary">수정</a>
-            {% endif %}
-            </div>
         </div>
     </div>
     <!-- 댓글 목록 -->
     <h5 class="border-bottom my-3 py-2">{{ userpost.comment_set|length }}개의 댓글이 있습니다.</h5>
     {% for comment in userpost.comment_set %}
     <div class="card my-3">
-        <div class="card-body">
+        <div class="card-body bg-dark">
             <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">

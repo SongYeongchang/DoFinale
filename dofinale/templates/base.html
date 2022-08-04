@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -19,17 +19,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cover.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-<body class="d-flex h-100 text-center text-white bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<body class="d-flex h-100 text-center text-white">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto my-auto flex-column">
     {% include "header.html" %}
     <!-- 기본 템플릿 안에 삽입될 내용 Start -->
     {% block content %}
     {% endblock %}
     <!-- 기본 템플릿 안에 삽입될 내용 End -->
-        {% include "chatbot.html" %}
-        <footer class="mt-auto text-white-50">
-            <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-        </footer>
+    <footer class="mt-auto text-white-50">
+        <p>2022 Hankyung IT Campus <a href="https://getbootstrap.com/" class="text-white">AI Project</a>, by <a href="https://twitter.com/mdo" class="text-white">@TeamDoFinale</a>.</p>
+    </footer>
     </div>
     <!-- Bootstrap JS -->
     <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>

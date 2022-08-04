@@ -40,6 +40,7 @@ def get_lat_and_log(address):
         print(address,'에러!!!')
         return (0.0,0.0)
 
+# Dialogflow 챗봇 Webhook
 @bp.route('/',methods=('POST','GET'))
 def chatbot():
     # 사용자 두피 상태 진단 예측 결과
@@ -54,9 +55,17 @@ def chatbot():
         print('gg[0]',gg[-1])
         print('gg[0] type',type(gg[-1]))
         print('gg[0] id',id(gg[-1]))
+        # session_user = Members.query.filter_by(id=session.get('user_id')).first()
+        # print('session_user>>'+session_user)
+        scalp_type_result_all = ''
+        # print(scalp_type_result_all)
+        for i in gg:
+            scalp_type_result_all += i+'/'
+        scalp_type_result_all = scalp_type_result_all[:-1]
         scalp_type_result=gg[-1]
+        # scalp_type_result = scalp_type_result_all.split('/')[-1]
         print('scalp_type_result',scalp_type_result)
-        # gg.remove(gg[-1])
+        # gg.remove(gg[])
 
         # scalp_type_result_all=''
         # for i in gg:
@@ -128,7 +137,7 @@ def chatbot():
                       },
                       {
                         "subtitle": "예측된 두피 진단 결과로 다음과 같은 서비스를 이용해보세요",
-                        "title": "당신의 두피 상태는 '"+ scalp_type_result +"'입니다.",
+                        "title": "당신의 두피 상태는 '"+ scalp_type_result_all +"'입니다.",
                         "type": "info"
                       },
                       {

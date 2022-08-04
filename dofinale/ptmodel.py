@@ -4,7 +4,6 @@ import torch
 from torchvision import transforms
 
 
-
 def Image_transformer(img_path):
     data_transforms = transforms.Compose([
         transforms.Resize((224, 224)),
