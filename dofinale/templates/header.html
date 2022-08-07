@@ -1,8 +1,36 @@
 <!-- Header -->
-<header class="mb-auto">
-    <div>
-        <h3 class="float-md-start mb-0 animated flip">DoFinale</h3>
-        <nav class="nav nav-masthead justify-content-center float-md-end">
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a class="navbar-brand float-md-start mb-0 text-white animated flip" href="{{ url_for('main.index') }}">DoFinale</a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+        {% if g.user %}
+          <button type="button" class="btn btn-outline-light me-2">Login</button>
+          <button type="button" class="btn btn-warning">Sign-up</button>
+        </div>
+      </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <header class="mb-auto border-bottom">
+        <!--  Navigation Bar  -->
+        <nav class="nav navbar navbar-expand-lg nav-masthead justify-content-center">
+            <a class="navbar-brand float-md-start mb-0 text-white animated flip" href="{{ url_for('main.index') }}">DoFinale</a>
             <ul class="custom-nav">
                 <li><a class="nav-link" href="{{ url_for('main.intro') }}">홈</a></li>
                 <li><a class="nav-link" href="{{ url_for('service.self_survey') }}">자가 진단</a></li>
@@ -17,8 +45,8 @@
                 {% endif %}
             </ul>
         </nav>
-    </div>
-</header>
+    </header>
+</div>
 <!-- Custom Navbar Style -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/custom-nav.css') }}" />
-<link rel="stylesheet" href="{{ url_for('static', filename='css/nav-brand-flip.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/anim-flip.css') }}" />
