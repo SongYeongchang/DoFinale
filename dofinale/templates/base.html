@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <!-- Font Awesome -->
-<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />-->
-    <!-- Google Fonts Roboto -->
-<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />-->
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <!-- MDB -->
-<!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />-->
-    <!-- Headers -->
-<!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/headers.css') }}">-->
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <title>두피 예측 서비스</title>
-</head>
-<body>
-{% include "navbar.html" %}
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-{% block content %}
-{% endblock %}
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
-<!-- Dialogflow 챗봇 -->
-{% include "chatbot.html" %}
-<!-- Bootstrap JS -->
-<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>DoFinale</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <!-- Bootstrap JS -->
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    </head>
+    <body>
+    {% include "header.html" %}
+        <main>
+        {% include "sidebar.html" %}
+        <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+        {% block content %}
+        {% endblock %}
+        <!-- 기본 템플릿 안에 삽입될 내용 End -->
+        </main>
+        <footer class="mt-auto text-white">
+            <p>2022 Hankyung IT Campus <a href="https://getbootstrap.com/" class="text-white">AI Project</a>, by <a href="https://twitter.com/mdo" class="text-white">@TeamDoFinale</a>.</p>
+        </footer>
+    </body>
 </html>

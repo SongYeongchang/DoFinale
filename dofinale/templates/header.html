@@ -1,0 +1,52 @@
+<!-- Header -->
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a class="navbar-brand float-md-start mb-0 text-white animated flip" href="{{ url_for('main.index') }}">DoFinale</a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+        {% if g.user %}
+          <button type="button" class="btn btn-outline-light me-2">Login</button>
+          <button type="button" class="btn btn-warning">Sign-up</button>
+        </div>
+      </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <header class="mb-auto border-bottom">
+        <!--  Navigation Bar  -->
+        <nav class="nav navbar navbar-expand-lg nav-masthead justify-content-center">
+            <a class="navbar-brand float-md-start mb-0 text-white animated flip" href="{{ url_for('main.index') }}">DoFinale</a>
+            <ul class="custom-nav">
+                <li><a class="nav-link" href="{{ url_for('main.intro') }}">홈</a></li>
+                <li><a class="nav-link" href="{{ url_for('service.self_survey') }}">자가 진단</a></li>
+                <li><a class="nav-link" href="{{ url_for('service.service') }}">두피 분석</a></li>
+                <li><a class="nav-link" href="{{ url_for('post._list') }}">게시판</a></li>
+                {% if g.user %}
+                <li><a class="nav-link" href="{{ url_for('auth.logout') }}">로그아웃</a></li>
+                <li><a class="nav-link" href="{{ url_for('auth.delete_user') }}">계정 탈퇴</a></li>
+                {% else %}
+                <li><a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a></li>
+                <li><a class="nav-link" href="{{ url_for('auth.signup') }}">계정 생성</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+</div>
+<!-- Custom Navbar Style -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom-nav.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/anim-flip.css') }}" />
