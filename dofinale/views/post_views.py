@@ -3,10 +3,10 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, url_for, g, flash
 from werkzeug.utils import redirect
 
-from .. import db
-from ..views.auth_views import login_required
-from ..forms import UserPostForm, UserCommentForm
-from ..models import Userpost
+from dofinale import db
+from dofinale.views.auth_views import login_required
+from dofinale.forms import UserPostForm, UserCommentForm
+from dofinale.models import Userpost
 
 bp = Blueprint('post', __name__, url_prefix='/post')
 

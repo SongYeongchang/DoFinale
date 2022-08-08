@@ -24,11 +24,15 @@ class Members(db.Model):
     # 가입 날짜
     signup_date = db.Column(db.DateTime, default = datetime.utcnow())
 
+
 # 두피 유형별 게시판 테이블 모델
+'''
 class Boards(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     # 게시판명
     board_name = db.Column(db.String(20, collation), nullable=False)
+'''
+
 
 # 회원 게시물 테이블 모델
 class Userpost(db.Model):
@@ -41,11 +45,13 @@ class Userpost(db.Model):
     create_date = db.Column(db.DateTime(), nullable=False)
 
     # ForeignKey를 통해 Boards의 id를 저장
+    '''
     boards_id = db.Column(db.Integer, db.ForeignKey('boards.id', ondelete='CASCADE'), nullable=False)
     # Boards 모델과 관계 설정
     # backref(역참조)를 통해 '(Boards 객체).post_set'은 해당 게시판의 게시물 세트를 보여줌
     # delete-orphan : 게시판이 삭제될 경우 해당 게시판에 속한 모든 게시물도 같이 삭제
     boards = db.relationship('Boards', backref=db.backref('post_set', cascade='all, delete-orphan'))
+    '''
 
     # ForeignKey를 통해 Members의 id를 저장
     user_id = db.Column(db.Integer, db.ForeignKey('members.id', ondelete='CASCADE'), nullable=False)

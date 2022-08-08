@@ -2,10 +2,10 @@ from datetime import datetime
 from flask import Blueprint, url_for, request, render_template, g
 from werkzeug.utils import redirect
 
-from .. import db
-from ..views.auth_views import login_required
-from ..forms import UserCommentForm
-from ..models import Userpost, Usercomment
+from dofinale import db
+from dofinale.views.auth_views import login_required
+from dofinale.forms import UserCommentForm
+from dofinale.models import Userpost, Usercomment
 
 bp = Blueprint('comment', __name__, url_prefix='/comment')
 

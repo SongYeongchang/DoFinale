@@ -3,18 +3,10 @@
  */
 
 body {
-  display: block;
-  align-items: center;
   background: #112c38;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
 }
 
 main {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 100vh;
-  max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -46,9 +38,21 @@ a {
   margin-left: 1rem;
 }
 
+.nav-masthead .navbar-toggler-icon {
+    background-image: url("../images/icons/navbar_toggler.png")
+}
+
 .nav-masthead .active {
   color: #fff;
   border-bottom-color: #fff;
+}
+
+.navbar-toggler:focus {
+    box-shadow: None;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
 }
 
 
@@ -75,4 +79,13 @@ a {
   50% {transform: perspective(400px) translateZ(0) rotateY(360deg) scale(.8);animation-timing-function: ease-in;}
   80% {transform: perspective(400px) translateZ(0) rotateY(360deg) scale(.95);animation-timing-function: ease-in;}
   100% {transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);animation-timing-function: ease-in;}
+}
+
+
+/*
+ * Dialogflow Chatbot
+ */
+
+df-messenger {
+    df-messenger-button-titlebar-color: #198754;
 }

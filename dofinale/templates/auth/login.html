@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+
     <!--  로그인이 안 된 상태에서 로그인이 필요한 서비스에 접속하는 경우 경고창을 띄워줌  -->
     {% if request.args.get('next', '') %}
     <div class="alert alert-danger" role="alert">

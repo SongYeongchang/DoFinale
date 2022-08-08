@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="w-100 h-100 mx-auto">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -11,10 +11,9 @@
         <!-- Bootstrap JS -->
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     </head>
-    <body>
-    {% include "header.html" %}
-        <main>
-        {% include "sidebar.html" %}
+    <body class="d-flex flex-column align-items-center h-100">
+        {% include "header.html" %}
+        <main class="container w-100 h-100 p-3 mx-auto flex-column">
         <!-- 기본 템플릿 안에 삽입될 내용 Start -->
         {% block content %}
         {% endblock %}

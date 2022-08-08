@@ -1,24 +1,12 @@
-import os.path, copy
-
 from flask import Blueprint, render_template, url_for, request, session, jsonify, g
 import json
 from geopy.geocoders import Nominatim # 가까운 병원 위경도 값으로 찾기
 from haversine import haversine
-
-from dofinale.views.auth_views import login_required
-from dofinale.models import Members
+import os.path
 
 from dofinale.views.service_views import gg
 
 bp = Blueprint('chatbot', __name__, url_prefix='/chatbot')
-
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get('user_id')
-    if user_id is None:
-        g.user = None
-    else:
-        g.user = Members.query.get(user_id)
 
 def get_lat_and_log(address):
     '''
@@ -44,41 +32,19 @@ def get_lat_and_log(address):
 @bp.route('/',methods=('POST','GET'))
 def chatbot():
     # 사용자 두피 상태 진단 예측 결과
-    # print(g.user.userid)
-
-    # print(scalp_type_result)
     # 사용자가 챗봇에 입력 시 데이터 받기
     req = request.get_json(force=True)
     print('접속 성공')
     try:
-        print("gg>",gg)
-        print('gg[0]',gg[-1])
-        print('gg[0] type',type(gg[-1]))
-        print('gg[0] id',id(gg[-1]))
-        # session_user = Members.query.filter_by(id=session.get('user_id')).first()
-        # print('session_user>>'+session_user)
+        print("gg>", gg)
+        print('gg[0]', gg[-1])
+        print('gg[0] type', type(gg[-1]))
+        print('gg[0] id', id(gg[-1]))
         scalp_type_result_all = ''
-        # print(scalp_type_result_all)
         for i in gg:
             scalp_type_result_all += i+'/'
         scalp_type_result_all = scalp_type_result_all[:-1]
-        scalp_type_result=gg[-1]
-        # scalp_type_result = scalp_type_result_all.split('/')[-1]
-        print('scalp_type_result',scalp_type_result)
-        # gg.remove(gg[])
-
-        # scalp_type_result_all=''
-        # for i in gg:
-        #     scalp_type_result_all += i
-        # scalp_type_result = gg[-1]
-        # for i in gg:
-        #     gg.remove(i)
-        # user_id = session.get('user_id')
-        # if user_id is None:
-        #     g.user = None
-        # else:
-        #     g.user = Members.query.get(user_id)
-        # scalp_type_result = g.user.scalp_type  # 진단결과 붙일때 마지막 func()[-1]
+        scalp_type_result = gg[-1]
     except:
         print('g.user 실패')
         scalp_type_result = '읽기 실패'
