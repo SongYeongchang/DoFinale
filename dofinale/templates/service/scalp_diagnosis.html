@@ -7,8 +7,9 @@
       <button type="submit" class="btn btn-primary my-2">사진 전송</button>
     </div>
 </form>
-{% if isresult %}
-<!-- Dialogflow 챗봇 -->
+
+{% if btnclick %}
 {% include "chatbot.html" %}
-{% endif %}
+{% endif%}
+
 {% endblock %}

@@ -9,4 +9,4 @@ def index():
 
 @bp.route('/intro/')
 def intro():
-    return render_template('intro.html')
+    return render_template('intro.html', isbgvid=True)

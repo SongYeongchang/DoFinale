@@ -1,10 +1,24 @@
-{% extends "base.html" %}
+{% extends "background.html" %}
 {% block content %}
+
 <div class="container">
-    <h5 class="my-3 border-bottom pb-2">계정 탈퇴</h5>
-    <p>정말 탈퇴하시겠습니까?</p>
-    <form method="post">
-        <button type="submit" class="btn btn-danger">탈퇴하기</button>
-    </form>
+  <div class="row justify-content-center">
+    <div class="col-xl-5 col-md-8">
+
+      <form class="bg-white rounded shadow-5-strong my-3 p-5" method="post">
+
+        <h2 class="mb-3 pb-2 text-center">회원 탈퇴</h2>
+        <p>정말 탈퇴하시겠습니까?</p>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-danger btn-block">
+          <strong>탈퇴하기</strong>
+        </button>
+
+      </form>
+
+    </div>
+  </div>
 </div>
+
 {% endblock %}

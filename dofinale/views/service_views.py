@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, request, session, jsonify, g
 from werkzeug.utils import redirect, secure_filename
+import json
 
 from dofinale.views.auth_views import login_required
 from dofinale.ptmodel import Image_transformer, Diagnosis
@@ -31,5 +32,22 @@ def scalp_diagnosis():
             gg.append(i)
         print("gg>>", gg)
 
-        return render_template('service/scalp_diagnosis.html', isresult=True)
-    return render_template('service/scalp_diagnosis.html')
+        return render_template('service/scalp_diagnosis.html', btnclick=True)
+    return render_template('service/scalp_diagnosis2.html')
+
+
+# 자가 문진 챗봇 연결 페이지
+@bp.route('/survey/', methods=['GET','POST'])
+@login_required
+def survey():
+    if request.method == 'POST':
+        return render_template('service/survey.html', btnclick=True)
+    return render_template('service/survey.html')
+
+# 제품 소개 페이지
+@bp.route('/product_list/', methods=['GET','POST'])
+
+def product_list():
+    with open('./dofinale/static/json_data/products.json', 'r', encoding="UTF-8") as file:
+        products = json.load(file)
+        return render_template('service/product_list.html', products=products)

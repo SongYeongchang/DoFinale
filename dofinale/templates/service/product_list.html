@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--헤더 영역-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-5 fw-bolder">두피 유형별 추천 제품 목록</h1>
+            <p class="lead fw-normal text-white-50 mb-0">DoFinale가 직접 조사하고 선별한 유형별 추천 제품 목록입니다.</p>
+        </div>
+    </div>
+</header>
+
+<!--콘텐츠 영역-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+
+        <!--두피 유형별 구분-->
+        {% for type in products['scalp_type'].keys() %}
+        <h2 class="px-3"><strong>{{ type }} 두피 추천 제품</strong></h2>
+        <hr class="hr" />
+            <!--카테고리별 구분-->
+            {% for category in products['scalp_type'][type].keys() %}
+            <h4 class="px-3">{{ category }}</h4>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 mt-3 pt-3 justify-content-center">
+                <!--제품 카드-->
+                {% for item in products['scalp_type'][type][category] %}
+                <div class="col mb-5 align-items-center" >
+                <div class="card h-100">
+
+                    <!--제품 이미지-->
+                    <img
+                         class="card-img-top img-thumbnail align-self-center"
+                         src="{{ url_for('static', filename='images/products/') + item['product_name'] + '.jpg' }}"
+                         alt="..."
+                         style="width:auto; height:50%;"
+                    >
+                    <!--제품 상세-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!--제품명-->
+                            <h5 class="fw-bolder">{{ item['product_name'] }}</h5>
+                            <!--가격 -->
+                            <p class="pb-auto">{{ item['price'].split('(')[0] }}</p>
+                            <!--한줄 설명-->
+                            <p class="text-muted mb-auto">{{ item['line'] }}</p>
+                        </div>
+                    </div>
+                    <!--버튼-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">구매 페이지 이동</a></div>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

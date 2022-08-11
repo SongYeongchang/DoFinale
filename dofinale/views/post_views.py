@@ -10,6 +10,11 @@ from dofinale.models import Userpost
 
 bp = Blueprint('post', __name__, url_prefix='/post')
 
+# 커뮤니티 메인 페이지
+@bp.route('/community/')
+def community():
+    return render_template('community.html')
+
 # 게시물 리스트 페이지
 @bp.route('/list/')
 def _list():

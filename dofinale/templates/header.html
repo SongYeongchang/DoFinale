@@ -1,28 +1,5 @@
 <!-- Header -->
 <header class="w-100 mb-auto border-bottom">
-    <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
-      <div class="overlay"></div>
-
-      <!-- The HTML5 video element that will create the background video on the header -->
-      <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="{{ url_for('static', filename='videos/bg_video2.mp4') }}" type="video/mp4">
-      </video>
-
-      <!-- The header content -->
-      <!-- Intro Logo Animation -->
-<div class="container d-flex align-items-center justify-content-center text-center h-100">
-    <div class="box">
-        <div class="title">
-            <span class="block"></span>
-            <h1>두피날레<span></span></h1>
-        </div>
-
-    <div class="role">
-        <div class="block"></div>
-            <p>AI 기반 두피 유형 진단 서비스</p>
-        </div>
-    </div>
-</div>
     <!--  Navigation Bar  -->
     <nav class="navbar navbar-expand-lg nav-masthead">
         <a class="navbar-brand mb-0 me-auto text-white animated flip" href="{{ url_for('main.index') }}">DoFinale</a>
@@ -44,7 +21,3 @@
         </div>
     </nav>
 </header>
-<!-- Custom Navbar Style -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/anim-flip.css') }}" />
-<link rel="stylesheet" href="{{ url_for('static', filename='css/video-background.css') }}" />
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reveal.css') }}" />

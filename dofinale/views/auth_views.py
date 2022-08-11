@@ -47,7 +47,7 @@ def login():
                 print('로그인 완료')
                 return redirect(url_for('main.index'))
         flash(error)
-    return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html', form=form, isbgvid=True)
 
 @bp.route('/logout/')
 def logout():
@@ -74,7 +74,7 @@ def signup():
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 유저입니다.')
-    return render_template('auth/signup.html', form=form)
+    return render_template('auth/signup2.html', form=form, isbgvid=True)
 
 @bp.route('/delete_user/', methods=('GET', 'POST'))
 def delete_user():
