@@ -8,6 +8,7 @@ from dofinale.views.service_views import gg
 
 bp = Blueprint('chatbot', __name__, url_prefix='/chatbot')
 
+
 def get_lat_and_log(address):
     '''
     주소 입력 시 위경도 값 출력하는 함수
@@ -27,6 +28,7 @@ def get_lat_and_log(address):
     except:
         print(address,'에러!!!')
         return (0.0,0.0)
+
 
 # Dialogflow 챗봇 Webhook
 @bp.route('/',methods=('POST','GET'))

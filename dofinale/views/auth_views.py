@@ -9,6 +9,7 @@ from dofinale.models import Members
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 # 로그인이 필요한 기능에 적용
 def login_required(view):
     @functools.wraps(view)
@@ -19,6 +20,8 @@ def login_required(view):
         return view(*args, **kwargs)
     return wrapped_view
 
+
+# 앱 시작하자마자 세션 유저 여부부터 확인
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -26,6 +29,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = Members.query.get(user_id)
+
 
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
@@ -40,20 +44,22 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
+            print('로그인 완료')
             _next = request.args.get('next', '')
             if _next:
                 return redirect(_next)
             else:
-                print('로그인 완료')
                 return redirect(url_for('main.index'))
         flash(error)
     return render_template('auth/login.html', form=form, isbgvid=True)
+
 
 @bp.route('/logout/')
 def logout():
     session.clear()
     print('로그아웃 완료')
     return redirect(url_for('main.index'))
+
 
 @bp.route('/signup/', methods=('GET', 'POST'))
 def signup():
@@ -74,7 +80,8 @@ def signup():
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 유저입니다.')
-    return render_template('auth/signup2.html', form=form, isbgvid=True)
+    return render_template('auth/signup.html', form=form, isbgvid=True)
+
 
 @bp.route('/delete_user/', methods=('GET', 'POST'))
 def delete_user():
@@ -84,4 +91,4 @@ def delete_user():
         session.clear()
         print('탈퇴 처리 완료')
         return redirect(url_for('main.index'))
-    return render_template('auth/delete_user.html')
+    return render_template('auth/delete_user.html', isbgvid=True)

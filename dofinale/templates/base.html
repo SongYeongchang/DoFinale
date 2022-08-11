@@ -39,18 +39,22 @@
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block border border-0" style="z-index: 2000;">
         <div class="container-fluid">
+
           <!-- Navbar brand -->
           <a class="navbar-brand nav-link" target="_self" href="{{ url_for('main.index') }}">
             <strong>두피날레</strong>
           </a>
-          <!-- 토글러 -->
-          <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
-            aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+
+          <!-- 토글러 버튼 -->
+          <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarMain"
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarExample01">
+          <!-- 반응형 옵션 -->
+          <div class="collapse navbar-collapse" id="navbarMain">
 
+            <!-- 내비게이션 목록 -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
               <!-- 서비스 소개 -->
@@ -59,7 +63,7 @@
                   target="_self">소개</a>
               </li>
 
-              <!-- 서비스 -->
+              <!-- 서비스 드롭다운 -->
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -71,31 +75,39 @@
                 >
                   서비스
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li>
-                    <a class="dropdown-item" href="{{ url_for('service.survey') }}">자가 진단</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{{ url_for('service.scalp_diagnosis') }}">AI 두피 분석</a>
-                  </li>
-                </ul>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li>
+                      <a class="dropdown-item" href="{{ url_for('service.scalp_diagnosis') }}">AI 두피 분석</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{{ url_for('service.survey') }}">자가 진단</a>
+                    </li>
+                  </ul>
               </li>
 
+              <!--두피 유형별 커뮤니티-->
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('post.community') }}" rel="nofollow"
                   target="_self">커뮤니티</a>
               </li>
 
+              <!--맞춤형 제품 소개 페이지-->
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('service.product_list') }}" target="_self">제품 소개</a>
               </li>
 
             </ul>
 
+
+            <!--우측 상단 회원 프로필 영역-->
+
+            <!--세션 있는 경우-->
             {% if g.user %}
+
             <ul class="navbar-nav d-flex flex-row">
               <!-- Right elements -->
               <div class="d-flex align-items-center">
+
                 <!-- Icon -->
                 <a class="text-reset me-3" href="#">
                   <i class="fas fa-shopping-cart fa-sm"></i>
@@ -114,21 +126,22 @@
                     <i class="fas fa-bell fa-sm"></i>
                     <span class="badge rounded-pill badge-notification bg-danger">1</span>
                   </a>
-                  <ul
-                    class="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="navbarDropdownMenuLink"
-                  >
-                    <li>
-                      <a class="dropdown-item" href="#">Some news</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Another news</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                  </ul>
+                    <ul
+                      class="dropdown-menu dropdown-menu-end"
+                      aria-labelledby="navbarDropdownMenuLink"
+                    >
+                      <li>
+                        <a class="dropdown-item" href="#">Some news</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Another news</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </li>
+                    </ul>
                 </div>
+
                 <!-- Avatar -->
                 <div class="dropdown">
                   <a
@@ -164,43 +177,49 @@
                       <a class="dropdown-item text-danger" href="{{ url_for('auth.delete_user') }}">회원 탈퇴</a>
                     </li>
                   </ul>
+                </div>
+
+              </div>
+            </ul>
+
+            <!--세션 없는 경우-->
             {% else %}
+
             <div class="d-flex align-items-center">
+              {% if isbgvid %}
               <a class="btn btn-link px-3 me-2 text-white" href="{{ url_for('auth.login') }}" role="button">
                 로그인
               </a>
+              {% else %}
+              <a class="btn btn-link px-3 me-2 text-dark" href="{{ url_for('auth.login') }}" role="button">
+                로그인
+              </a>
+              {% endif %}
               <a class="btn btn-primary me-3 text-white" href="{{ url_for('auth.signup') }}" role="button">
                 회원가입
               </a>
             </div>
             {% endif %}
-
-
-
-
-
           </div>
         </div>
       </nav>
       <!-- Navbar -->
-      <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-      {% if isbgvid %}
-        {% block background %}
-        {% endblock %}
-      {% else %}
-        {% block content %}
-        {% endblock %}
-      {% endif %}
 
-    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+    {% if isbgvid %}
+      {% block background %}
+      {% endblock %}
+    {% endif %}
+
     </header>
 
+  {% block content %}
+  {% endblock %}
+
+  <!-- DF 챗봇 -->
+  {% include "chatbot.html" %}
 
     <!--Footer-->
-    {% include "chatbot.html" %}
     <footer class="bg-light text-lg-start">
-
-      <hr class="m-0" />
 
       <div class="text-center py-4 align-items-center">
         <a
@@ -247,11 +266,14 @@
         <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
       </div>
       <!-- Copyright -->
+
     </footer>
     <!--Footer-->
+
     <!-- MDB -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Custom scripts -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 </body>
 </html>

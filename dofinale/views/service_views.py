@@ -33,7 +33,7 @@ def scalp_diagnosis():
         print("gg>>", gg)
 
         return render_template('service/scalp_diagnosis.html', btnclick=True)
-    return render_template('service/scalp_diagnosis2.html')
+    return render_template('service/scalp_diagnosis.html')
 
 
 # 자가 문진 챗봇 연결 페이지
@@ -44,9 +44,9 @@ def survey():
         return render_template('service/survey.html', btnclick=True)
     return render_template('service/survey.html')
 
+
 # 제품 소개 페이지
 @bp.route('/product_list/', methods=['GET','POST'])
-
 def product_list():
     with open('./dofinale/static/json_data/products.json', 'r', encoding="UTF-8") as file:
         products = json.load(file)

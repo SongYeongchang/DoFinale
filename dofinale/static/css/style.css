@@ -6,8 +6,17 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-a {
+.btn-link {
     text-decoration: None;
+    transition: color .15s ease-in-out!important;
+}
+
+.btn-link:hover {
+    color: #000!important;
+}
+
+.sticky-top {
+    z-index: auto;
 }
 
 /*
@@ -41,5 +50,5 @@ a {
  */
 
 df-messenger {
-    df-messenger-button-titlebar-color: #198754;
+    df-messenger-button-titlebar-color: #129ef1ad;
 }
