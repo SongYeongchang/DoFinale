@@ -27,7 +27,7 @@
           }
         }
 
-        i, .navbar .nav-link {
+        .fa-sm, .navbar .nav-link {
           {% if isbgvid %}
             color: #fff !important;
           {% else %}
@@ -42,7 +42,7 @@
 
           <!-- Navbar brand -->
           <a class="navbar-brand nav-link" target="_self" href="{{ url_for('main.index') }}">
-            <strong>두피날레</strong>
+            <strong>DoFinale</strong>
           </a>
 
           <!-- 토글러 버튼 -->
@@ -59,8 +59,8 @@
 
               <!-- 서비스 소개 -->
               <li class="nav-item">
-                <a class="nav-link" href="#" rel="nofollow"
-                  target="_self">소개</a>
+                <a class="nav-link" href="{{ url_for('service.about') }}" rel="nofollow"
+                  target="_self">About Us</a>
               </li>
 
               <!-- 서비스 드롭다운 -->
@@ -73,7 +73,7 @@
                   data-mdb-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  서비스
+                  Service
                 </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li>
@@ -88,12 +88,12 @@
               <!--두피 유형별 커뮤니티-->
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('post.community') }}" rel="nofollow"
-                  target="_self">커뮤니티</a>
+                  target="_self">Community</a>
               </li>
 
               <!--맞춤형 제품 소개 페이지-->
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('service.product_list') }}" target="_self">제품 소개</a>
+                <a class="nav-link" href="{{ url_for('service.product_list') }}" target="_self">Shop</a>
               </li>
 
             </ul>
@@ -153,7 +153,7 @@
                     aria-expanded="false"
                   >
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                      src="{{ url_for('static', filename='images/stock/profile_sample.png') }}"
                       class="rounded-circle"
                       height="35"
                       alt="Black and White Portrait of a Man"
@@ -164,6 +164,11 @@
                     class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="navbarDropdownMenuAvatar"
                   >
+                    <li>
+                      <span class="dropdown-item border-bottom">
+                        <strong>{{ g.user.userid }}</strong>
+                      </span>
+                    </li>
                     <li>
                       <a class="dropdown-item" href="#">내 프로필</a>
                     </li>
@@ -212,18 +217,22 @@
 
     </header>
 
-  {% block content %}
-  {% endblock %}
+    {% if isbgvid %}
+      {% include "main_content.html" %}
+    {% else %}
+      {% block content %}
+      {% endblock %}
+    {% endif %}
 
   <!-- DF 챗봇 -->
   {% include "chatbot.html" %}
 
     <!--Footer-->
-    <footer class="bg-light text-lg-start">
+    <footer class="py-5 bg-light text-lg-start">
 
       <div class="text-center py-4 align-items-center">
         <a
-          href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA"
+          href="https://github.com/SongYeongchang/DoFinale"
           class="btn btn-primary m-1"
           role="button"
           rel="nofollow"
@@ -232,7 +241,7 @@
           <i class="fab fa-youtube"></i>
         </a>
         <a
-          href="https://www.facebook.com/mdbootstrap"
+          href="https://github.com/SongYeongchang/DoFinale"
           class="btn btn-primary m-1"
           role="button"
           rel="nofollow"
@@ -241,7 +250,7 @@
           <i class="fab fa-facebook-f"></i>
         </a>
         <a
-          href="https://twitter.com/MDBootstrap"
+          href="https://github.com/SongYeongchang/DoFinale"
           class="btn btn-primary m-1"
           role="button"
           rel="nofollow"
@@ -250,7 +259,7 @@
           <i class="fab fa-twitter"></i>
         </a>
         <a
-          href="https://github.com/mdbootstrap/mdb-ui-kit"
+          href="https://github.com/SongYeongchang/DoFinale"
           class="btn btn-primary m-1"
           role="button"
           rel="nofollow"
@@ -262,8 +271,8 @@
 
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        © 2022 Hankyung IT Campus :
+        <a class="text-dark" href="https://github.com/SongYeongchang/DoFinale">Team DoFinale</a>
       </div>
       <!-- Copyright -->
 
@@ -274,6 +283,9 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Custom scripts -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-
+<!-- 자바스크립트 Start -->
+{% block script %}
+{% endblock %}
+<!-- 자바스크립트 End -->
 </body>
 </html>

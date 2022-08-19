@@ -1,45 +1,194 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container my-3">
-    <!-- 게시물 -->
-    <h2 class="border-bottom py-2">{{ userpost.subject }}</h2>
-    <div class="card my-3">
-        <div class="card-body bg-dark">
-            <div class="card-text" style="white-space: pre-line;">{{ userpost.content }}</div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start">
-                    <div class="mb-2">{{ userpost.user.userid }}</div>
-                    <div>{{ userpost.create_date|datetime }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 댓글 목록 -->
-    <h5 class="border-bottom my-3 py-2">{{ userpost.comment_set|length }}개의 댓글이 있습니다.</h5>
-    {% for comment in userpost.comment_set %}
-    <div class="card my-3">
-        <div class="card-body bg-dark">
-            <div class="card-text" style="white-space: pre-line;">{{ comment.content }}</div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start">
-                    <div class="mb-2">{{ comment.user.userid }}</div>
-                    <div>{{ comment.create_date|datetime }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-    <!-- 댓글 등록 -->
-    <form action="{{ url_for('comment.create', userpost_id=userpost.id) }}" method="post" class="my-3">
-        {{ form.csrf_token }}
-        {% include "form_errors.html" %}
-        <div class="mb-3">
-            <textarea {% if not g.user %}disabled{% endif %}
-                    name="content" id="content" class="form-control" rows="10"></textarea>
-        </div>
-        <input type="submit" value="댓글 등록" class="btn btn-primary">
-    </form>
-</div>
+<!--Main layout-->
+  <main class="mt-4 mb-5">
+    <div class="container">
+        <h2 class="border-bottom p-3"><strong>{{ userpost.subject }}</strong></h2>
+      <!--Grid row-->
+      <div class="row p-3">
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
 
+
+          <!--Section: Text-->
+          <section >
+              {% if not userpost.img_upload %}
+              <img src="{{ url_for('static', filename='images/stock/post_sample.jpg') }}" class="img-fluid shadow-2-strong rounded-5 mb-4" alt=""
+                 style="max-width:70%;"
+            />
+            {% else %}
+              <img src="{{ url_for('static', filename='images/post/'+userpost.img_upload) }}"
+              class="img-fluid shadow-2-strong rounded-5 mb-4" alt=""
+                 style="max-width:70%;"
+            />
+              {% endif %}
+            <p style="white-space: pre-line;">
+              {{ userpost.content }}
+            </p>
+          </section>
+          <!--Section: Text-->
+
+          <!--Section: Share buttons-->
+          <section class="text-center border-top border-bottom py-4 mb-4">
+            <div class="row align-items-center mb-4">
+              <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+                <img src="{{ url_for('static', filename='images/stock/profile_sample.png') }}" class="rounded-circle shadow-1-strong me-2"
+                  height="35" alt="" loading="lazy" />
+                <span>
+                  <u>{{ userpost.create_date|datetime }}</u>
+                  작성자: <a href="" class="text-dark">{{ userpost.user.userid }}</a>
+                </span>
+              </div>
+
+              <div class="col-lg-6 text-center text-lg-end">
+                {% if g.user == userpost.user %}
+    <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+               data-uri="{{ url_for('post.delete', userpost_id=userpost.id) }}">게시물 삭제</a>
+    {% endif %}
+              </div>
+            </div>
+
+            <p><strong>공유하기:</strong></p>
+
+            <button type="button" class="btn btn-primary me-1" style="background-color: #3b5998;">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+            <button type="button" class="btn btn-primary me-1" style="background-color: #55acee;">
+              <i class="fab fa-twitter"></i>
+            </button>
+            <button type="button" class="btn btn-primary me-1" style="background-color: #0082ca;">
+              <i class="fab fa-linkedin"></i>
+            </button>
+            <button type="button" class="btn btn-primary me-1">
+              <i class="fas fa-comments me-2"></i>Add comment
+            </button>
+          </section>
+          <!--Section: Share buttons-->
+
+          <!--Section: Author-->
+          <section class="border-bottom mb-4 pb-4">
+            <div class="row">
+              <div class="col-3">
+                <img src="{{ url_for('static', filename='images/stock/profile_sample.png') }}"
+                  class="img-fluid shadow-1-strong rounded-circle" alt="" />
+              </div>
+
+              <div class="col-9">
+                <p class="mb-2"><strong>{{ userpost.user.userid }}</strong></p>
+                <a href="" class="text-dark"><i class="fab fa-facebook-f me-1"></i></a>
+                <a href="" class="text-dark"><i class="fab fa-twitter me-1"></i></a>
+                <a href="" class="text-dark"><i class="fab fa-linkedin me-1"></i></a>
+                <p>
+                  안녕하세요, {{ userpost.user.userid }}입니다.
+                </p>
+              </div>
+            </div>
+          </section>
+          <!--Section: Author-->
+
+          <!--Section: Comments-->
+          <section class="border-bottom mb-3">
+            <p class="text-center"><strong>{{ userpost.comment_set|length }}개의 댓글이 있습니다.</strong></p>
+
+            {% for comment in userpost.comment_set %}
+              <!-- Comment -->
+            <div class="row mb-4">
+              <div class="col-2">
+                <img src="{{ url_for('static', filename='images/stock/profile_sample.png') }}"
+                  class="img-fluid shadow-1-strong rounded-circle" alt="" />
+              </div>
+
+              <div class="col-10">
+                <p class="mb-2"><strong>{{ comment.user.userid }}</strong></p>
+                  <p class="text-muted">{{ comment.create_date|datetime }}</p>
+                <p style="white-space: pre-line;">{{ comment.content }}</p>
+              </div>
+            </div>
+              {% endfor %}
+          </section>
+          <!--Section: Comments-->
+
+          <!--Section: Reply-->
+          <section>
+            <p class="text-center"><strong>댓글 남기기</strong></p>
+
+            <form action="{{ url_for('comment.create', userpost_id=userpost.id) }}" method="post">
+                {{ form.csrf_token }}
+        {% include "form_errors.html" %}
+              <!-- Message input -->
+              <div class="form-outline mb-4">
+                <textarea {% if not g.user %}disabled{% endif %}
+                        name="content" class="form-control" id="reply" rows="4"></textarea>
+                <label class="form-label" for="reply">댓글 입력</label>
+              </div>
+
+
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                댓글 등록
+              </button>
+            </form>
+          </section>
+          <!--Section: Reply-->
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+         <!--Section: Sidebar-->
+          <section class="sticky-top" style="top: 80px;">
+            <!--Section: Ad-->
+            <section class="text-center border-bottom pb-4 mb-4">
+              <div class="bg-image hover-overlay ripple mb-4">
+                <img
+                  src="https://mblogthumb-phinf.pstatic.net/MjAyMDA5MTZfMjEg/MDAxNjAwMjI1MTE2MTQ3.LKoiEIY06aO9vbCMrvdHukIxkOONyp_RfhX6r3mWmX8g.yDwbTwiBrxUgRTZgpJRzCdAhEX9HinSlSXkCDgSLq1gg.PNG.gsh8600/image.png?type=w800"
+                  class="img-fluid"/>
+                <a href="https://m.blog.naver.com/gsh8600/222090964017" target="_blank">
+                  <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+                </a>
+              </div>
+              <h5>(광고) 홍앤유 클리닉</h5>
+              <p>
+                  소중한 모발 늦지않게 지켜주세요!
+                  여성두피피부과/탈모주사  홍앤유클리닉
+              </p>
+            </section>
+            <!--Section: Ad-->
+
+            <!--Section: Video-->
+            <section class="text-center">
+              <h5 class="mb-4">두피 케어 추천 영상</h5>
+
+              <div class="embed-responsive embed-responsive-16by9 shadow-4-strong">
+                <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/QJhwYpJ89hc"
+                  allowfullscreen></iframe>
+              </div>
+            </section>
+            <!--Section: Video-->
+          </section>
+          <!--Section: Sidebar-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+  </main>
+  <!--Main layout-->
+
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+const delete_elements = document.getElementsByClassName("delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+</script>
 {% endblock %}

@@ -1,9 +1,34 @@
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+
+<!-- 과거
+<df-messenger
+  intent="WELCOME"
+  append
+  chat-title="Doofy"
+  agent-id="f502aac0-8bc1-416d-95b3-ff91efdad536"
+  language-code="ko"
+  chat-icon="https://raw.githubusercontent.com/SongYeongchang/DoFinale/master/dofinale/static/images/icons/chatbot.png"
+  {% if g.user %}
+  user-id="{{ g.user.id }}"
+  {% else %}
+  user-id="no_user"
+  {% endif %}
+  wait-open
+></df-messenger>-->
+
+
+<!-- 두피 -->
 <df-messenger
   intent="WELCOME"
   chat-title="Doofy"
-  agent-id="dcc4f570-5e46-4f16-bc2c-97d2c10c0bb7"
-  language-code="ko"
   chat-icon="https://raw.githubusercontent.com/SongYeongchang/DoFinale/master/dofinale/static/images/icons/chatbot.png"
+  agent-id="dcc4f570-5e46-4f16-bc2c-97d2c10c0bb7"
+  {% if g.user %}
+  user-id="{{ g.user.id }}"
+  {% else %}
+  user-id="no_user"
+  {% endif %}
+  language-code="ko"
   wait-open
 ></df-messenger>
-<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>

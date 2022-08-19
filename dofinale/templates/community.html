@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!--메인 레이아웃-->
+  <!--헤더 영역-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-5 fw-bolder">두피 질환 유형별 커뮤니티</h1>
+                <p class="lead fw-normal text-white-50 mb-0">
+                  대표적인 3가지 두피 질환 유형인 지루성, 비듬성, 탈모성 두피에 대한
+                  다양한 정보와 제품 후기 등을 제공하고 공유하는 커뮤니티입니다.
+                </p>
+            </div>
+        </div>
+    </header>
+
+  <!--메인 레이아웃-->
   <main class="mt-5">
     <!--컨테이너-->
     <div class="container w-75 align-itmes-center">
       <!--섹션-->
       <section class="text-center">
-
-        <!--제목-->
-        <h3 class="mb-5"><strong>두피 질환 유형별 커뮤니티</strong></h3>
-
-        <!--설명-->
-        <p class="text-muted mb-5">
-          대표적인 3가지 두피 질환 유형인 지루성, 비듬성, 탈모성 두피에 대한
-          다양한 정보와 제품 후기 등을 제공하고 공유하는 커뮤니티입니다.
-        </p>
-
         <!--카드 모음-->
         <div class="row">
 
@@ -28,17 +31,17 @@
                   src="{{ url_for('static', filename='images/icons/seborrhoeic.png') }}"
                   class="img-fluid"
                 />
-                <a href="{{ url_for('post._list') }}">
+                <a href="{{ url_for('post._list', board_id=1) }}">
                   <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                 </a>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><strong>지루성 두피</strong></h5>
+                <h5 class="card-title"><strong>지루성 두피 유저 모임</strong></h5>
                 <p class="card-text">
                   피지의 분비가 많아 발생하는 만성 염증성 두피.
                   홍반(붉은 반점)과 염증성 농포가 주요 증상.
                 </p>
-                <a href="{{ url_for('post._list') }}" class="btn btn-primary">입장하기</a>
+                <a href="{{ url_for('post._list', board_id=1) }}" class="btn btn-primary">입장하기</a>
               </div>
             </div>
           </div>
@@ -52,17 +55,17 @@
                   src="{{ url_for('static', filename='images/icons/dandruff.png') }}"
                   class="img-fluid"
                 />
-                <a href="{{ url_for('post._list') }}">
+                <a href="{{ url_for('post._list', board_id=2) }}">
                   <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                 </a>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><strong>비듬성 두피</strong></h5>
+                <h5 class="card-title"><strong>비듬성 두피 유저 모임</strong></h5>
                 <p class="card-text">
                   비듬균의 이상증식 및 두피 각질층, 내모근초의 탈락 등에 의해
                   비듬이 과다 발생하는 유형.
                 </p>
-                <a href="{{ url_for('post._list') }}" class="btn btn-primary">입장하기</a>
+                <a href="{{ url_for('post._list', board_id=2) }}" class="btn btn-primary">입장하기</a>
               </div>
             </div>
           </div>
@@ -76,17 +79,17 @@
                   src="{{ url_for('static', filename='images/icons/hair_loss.png') }}"
                   class="img-fluid"
                 />
-                <a href="{{ url_for('post._list') }}">
+                <a href="{{ url_for('post._list', board_id=3) }}">
                   <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                 </a>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><strong>탈모성 두피</strong></h5>
+                <h5 class="card-title"><strong>탈모성 두피 유저 모임</strong></h5>
                 <p class="card-text">
                   정상적으로 존재해야 할 부위에 모발이 없으며,
                   두피의 성모(굵고 검은 머리털)가 잘 빠지는 유형.
                 </p>
-                <a href="{{ url_for('post._list') }}" class="btn btn-primary">입장하기</a>
+                <a href="{{ url_for('post._list', board_id=3) }}" class="btn btn-primary">입장하기</a>
               </div>
             </div>
           </div>

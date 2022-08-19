@@ -6,582 +6,94 @@
 
     <div class="container px-5">
 
-        <h2 class="px-3"><strong>지루성 두피</strong></h2>
+        <h2 class="px-3"><strong>{{ board.board_name }} 두피 유저 모임</strong></h2>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">홈</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('post.community') }}">커뮤니티</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ board.board_name }} 두피 유저 모임</li>
           </ol>
         </nav>
         <hr class="hr" />
 
+      {% if not userpost_list.items[0] %}
+        <a href="{{ url_for('post.create', board_id=board.id) }}" class="btn btn-primary">게시글 등록</a>
+      {% else %}
         <!--Section: News of the day-->
     <section class="border-bottom pb-4 mb-5">
       <div class="row gx-5">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
           <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
-            <img src="https://mdbootstrap.com/img/new/slides/080.jpg" class="img-fluid" />
-            <a href="#!">
+            {% if not userpost_list.items[0].img_upload %}
+            <img src="{{ url_for('static', filename='images/stock/post_sample.jpg') }}" class="img-fluid" style="overflow: hidden;"/>
+            {% else %}
+            <img src="{{ url_for('static', filename='images/post/'+userpost_list.items[0].img_upload) }}" class="img-fluid" style="overflow: hidden;"/>
+            {% endif %}
+            <a href="{{ url_for('post.detail', userpost_id=userpost_list.items[0].id) }}">
               <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
             </a>
           </div>
         </div>
 
-        <div class="col-md-6 mb-4">
-          <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">News of the day</span>
-          <h4><strong>Facilis consequatur eligendi</strong></h4>
+        <div class="col-md-8 mb-4">
+          <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">최신글</span>
+          <h4><strong>{{ userpost_list.items[0].subject }}</strong></h4>
           <p class="text-muted">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
-            eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi laborum
-            sapiente illo possimus, commodi dignissimos obcaecati illum maiores corporis.
+            {% if userpost_list.items[0].content|length > 200 %}
+              {{ userpost_list.items[0].content[:200] + '...' }}
+            {% else %}
+              {{ userpost_list.items[0].content }}
+            {% endif %}
           </p>
-          <button type="button" class="btn btn-primary">Read more</button>
+          <button type="button" class="btn btn-primary">본문 읽기</button>
         </div>
       </div>
     </section>
     <!--Section: News of the day-->
 
-    <!--Section: Content-->
-    <section>
-      <div class="row gx-lg-5">
-        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-          <!-- News block -->
-          <div>
-            <!-- Featured image -->
-            <div class="bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4" data-mdb-ripple-color="light">
-              <img src="https://mdbootstrap.com/img/new/fluid/city/113.jpg" class="img-fluid" />
-              <a href="#!">
-                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-              </a>
-            </div>
 
-            <!-- Article data -->
-            <div class="row mb-3">
-              <div class="col-6">
-                <a href="" class="text-info">
-                  <i class="fas fa-plane"></i>
-                  Travels
-                </a>
-              </div>
-
-              <div class="col-6 text-end">
-                <u> 15.07.2020</u>
-              </div>
-            </div>
-
-            <!-- Article title and description -->
-            <a href="" class="text-dark">
-              <h5>This is title of the news</h5>
-
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                adipisci iusto nam temporibus modi animi laboriosam?
-              </p>
-            </a>
-
-            <hr />
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/042.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/043.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/044.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- News block -->
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <!-- News block -->
-          <div>
-            <!-- Featured image -->
-            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4" data-mdb-ripple-color="light">
-              <img src="https://mdbootstrap.com/img/new/fluid/city/011.jpg" class="img-fluid" />
-              <a href="#!">
-                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-              </a>
-            </div>
-
-            <!-- Article data -->
-            <div class="row mb-3">
-              <div class="col-6">
-                <a href="" class="text-danger">
-                  <i class="fas fa-chart-pie"></i>
-                  Business
-                </a>
-              </div>
-
-              <div class="col-6 text-end">
-                <u> 15.07.2020</u>
-              </div>
-            </div>
-
-            <!-- Article title and description -->
-            <a href="" class="text-dark">
-              <h5>This is title of the news</h5>
-
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                adipisci iusto nam temporibus modi animi laboriosam?
-              </p>
-            </a>
-
-            <hr />
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/031.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/032.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/033.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/034.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- News block -->
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-          <!-- News block -->
-          <div>
-            <!-- Featured image -->
-            <div class="bg-image hover-overlay shadow-1-strong rounded-5 ripple mb-4" data-mdb-ripple-color="light">
-              <img src="https://mdbootstrap.com/img/new/fluid/city/018.jpg" class="img-fluid" />
-              <a href="#!">
-                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-              </a>
-            </div>
-
-            <!-- Article data -->
-            <div class="row mb-3">
-              <div class="col-6">
-                <a href="" class="text-warning">
-                  <i class="fas fa-code"></i>
-                  Technology
-                </a>
-              </div>
-
-              <div class="col-6 text-end">
-                <u> 15.07.2020</u>
-              </div>
-            </div>
-
-            <!-- Article title and description -->
-            <a href="" class="text-dark">
-              <h5>This is title of the news</h5>
-
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, iste aliquid. Sed
-                id nihil magni, sint vero provident esse numquam perferendis ducimus dicta
-                adipisci iusto nam temporibus modi animi laboriosam?
-              </p>
-            </a>
-
-            <hr />
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/011.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/012.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/013.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <!-- News -->
-            <a href="" class="text-dark">
-              <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                  <img src="https://mdbootstrap.com/img/new/standard/city/014.jpg"
-                       class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                  <p class="mb-2"><strong>Lorem ipsum dolor sit amet</strong></p>
-                  <p>
-                    <u> 15.07.2020</u>
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- News block -->
-        </div>
-      </div>
-    </section>
-    <!--Section: Content-->
 
 
 
 
       <!--Grid row-->
-      <div class="row py-5">
+      <div class="row py-3">
         <!--Grid column-->
         <div class="col-md-9 mb-4">
           <!--Section: Content-->
           <section>
+
+        {% for userpost in userpost_list.items[1:] %}
             <!-- Post -->
             <div class="row">
-              <div class="col-md-4 mb-4">
+              <div class="col-md-2 mb-4">
                 <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
-                  <img src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" class="img-fluid" />
-                  <a href="#!">
+                    {% if not userpost.img_upload %}
+                    <img src="{{ url_for('static', filename='images/stock/post_sample.jpg') }}" class="img-fluid" style="overflow: hidden;"/>
+                  {% else %}
+                    <img src="{{ url_for('static', filename='images/post/'+userpost.img_upload) }}" class="img-fluid" />
+                    {% endif %}
+                  <a href="{{ url_for('post.detail', userpost_id=userpost.id) }}">
                     <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                   </a>
                 </div>
               </div>
 
-              <div class="col-md-8 mb-4">
-                <h5>Very long post title</h5>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                  necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam
-                  minus ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos
-                  magni.
+              <div class="col-md-10 mb-4">
+                  <h5><strong>{{ userpost.subject }}</strong></h5>
+                <p class="text-muted">
+                  {% if userpost.content|length > 200 %}
+              {{ userpost.content[:200] + '...' }}
+            {% else %}
+              {{ userpost.content }}
+            {% endif %}
                 </p>
 
                 <button type="button" class="btn btn-primary">Read</button>
               </div>
             </div>
-
-            <!-- Post -->
-            <div class="row">
-              <div class="col-md-4 mb-4">
-                <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
-                  <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
-                  <a href="#!">
-                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="col-md-8 mb-4">
-                <h5>Very long post title</h5>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                  necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam
-                  minus ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos
-                  magni.
-                </p>
-
-                <button type="button" class="btn btn-primary">Read</button>
-              </div>
-            </div>
-
-            <!-- Post -->
-            <div class="row">
-              <div class="col-md-4 mb-4">
-                <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
-                  <img src="https://mdbootstrap.com/img/new/standard/nature/023.jpg" class="img-fluid" />
-                  <a href="#!">
-                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="col-md-8 mb-4">
-                <h5>Very long post title</h5>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                  necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam
-                  minus ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos
-                  magni.
-                </p>
-
-                <button type="button" class="btn btn-primary">Read</button>
-              </div>
-            </div>
-
-            <!-- Post -->
-            <div class="row">
-              <div class="col-md-4 mb-4">
-                <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
-                  <img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="img-fluid" />
-                  <a href="#!">
-                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="col-md-8 mb-4">
-                <h5>Very long post title</h5>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ratione
-                  necessitatibus itaque error alias repellendus nemo reiciendis aperiam quisquam
-                  minus ipsam reprehenderit commodi ducimus, in dicta aliquam eveniet dignissimos
-                  magni.
-                </p>
-
-                <button type="button" class="btn btn-primary">Read</button>
-              </div>
-            </div>
-          </section>
-          <!--Section: Content-->
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-md-3 mb-4">
-          <!--Section: Sidebar-->
-          <section class="sticky-top" style="top: 80px;">
-            <!--Section: Ad-->
-            <section class="text-center border-bottom pb-4 mb-4">
-              <div class="bg-image hover-overlay ripple mb-4">
-                <img
-                  src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/content/en/_mdb5/standard/about/assets/mdb5-about.webp"
-                  class="img-fluid" />
-                <a href="https://mdbootstrap.com/docs/standard/" target="_blank">
-                  <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
-                </a>
-              </div>
-              <h5>Material Design for Bootstrap 5</h5>
-
-              <p>
-                500+ components, free templates, 1-min installation, extensive tutorial, huge
-                community. MIT license - free for personal & commercial use
-              </p>
-              <a role="button" class="btn btn-primary" href="https://mdbootstrap.com/docs/standard/"
-                target="_blank">Download for free<i class="fas fa-download ms-2"></i></a>
-            </section>
-            <!--Section: Ad-->
-
-            <!--Section: Video-->
-            <section class="text-center">
-              <h5 class="mb-4">두피 케어 추천 영상</h5>
-
-              <div class="embed-responsive embed-responsive-16by9 shadow-4-strong">
-                <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/QJhwYpJ89hc"
-                  allowfullscreen></iframe>
-              </div>
-            </section>
-            <!--Section: Video-->
-          </section>
-          <!--Section: Sidebar-->
-        </div>
-        <!--Grid column-->
-      </div>
-      <!--Grid row-->
-
-      <!-- Pagination -->
-      <nav class="my-4" aria-label="...">
-        <ul class="pagination pagination-circle justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </main>
-  <!--Main layout-->
-
-
-
-
-<div class="container my-3">
-    <table class="table table-warning">
-        <thead>
-        <tr class="text-center">
-            <th>번호</th>
-            <th style="width:50%">제목</th>
-            <th>글쓴이</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if userpost_list %}
-        {% for userpost in userpost_list.items %}
-        <tr class="text-center">
-            <td>{{ userpost_list.total - ((userpost_list.page-1) * userpost_list.per_page) - loop.index0 }}</td>
-            <td class="text-start">
-                <a class="table" href=" {{ url_for('post.detail', userpost_id=userpost.id) }}/">{{ userpost.subject }}</a>
-                {% if userpost.comment_set|length > 0 %}
-                <span class="text-danger small mx-2">{{ userpost.comment_set|length }}</span>
-                {% endif %}
-            </td>
-            <td>{{ userpost.user.userid }}</td>  <!-- 글쓴이 추가 -->
-            <td>{{ userpost.create_date|datetime }}</td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">게시물이 없습니다.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
-    <!-- 페이징처리 시작 -->
+              {% endfor %}
+              <!-- 페이징처리 시작 -->
     <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->
         {% if userpost_list.has_prev %}
@@ -622,6 +134,57 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
-    <a href="{{ url_for('post.create') }}" class="btn btn-primary">게시글 등록</a>
-</div>
+              <div class="text-center">
+              <a href="{{ url_for('post.create', board_id=board.id) }}" class="btn btn-primary">게시글 등록</a>
+                  </div>
+          </section>
+          <!--Section: Content-->
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-4">
+          <!--Section: Sidebar-->
+          <section class="sticky-top" style="top: 80px;">
+            <!--Section: Ad-->
+            <section class="text-center border-bottom pb-4 mb-4">
+              <div class="bg-image hover-overlay ripple mb-4">
+                <img
+                  src="https://mblogthumb-phinf.pstatic.net/MjAyMDA5MTZfMjEg/MDAxNjAwMjI1MTE2MTQ3.LKoiEIY06aO9vbCMrvdHukIxkOONyp_RfhX6r3mWmX8g.yDwbTwiBrxUgRTZgpJRzCdAhEX9HinSlSXkCDgSLq1gg.PNG.gsh8600/image.png?type=w800"
+                  class="img-fluid"/>
+                <a href="https://m.blog.naver.com/gsh8600/222090964017" target="_blank">
+                  <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+                </a>
+              </div>
+              <h5>(광고) 홍앤유 클리닉</h5>
+              <p>
+                  소중한 모발 늦지않게 지켜주세요!
+                  여성두피피부과/탈모주사  홍앤유클리닉
+              </p>
+            </section>
+            <!--Section: Ad-->
+
+            <!--Section: Video-->
+            <section class="text-center">
+              <h5 class="mb-4">두피 케어 추천 영상</h5>
+
+              <div class="embed-responsive embed-responsive-16by9 shadow-4-strong">
+                <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/QJhwYpJ89hc"
+                  allowfullscreen></iframe>
+              </div>
+            </section>
+            <!--Section: Video-->
+          </section>
+          <!--Section: Sidebar-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endif %}
 {% endblock %}

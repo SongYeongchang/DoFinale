@@ -4,10 +4,14 @@ from geopy.geocoders import Nominatim # 가까운 병원 위경도 값으로 찾
 from haversine import haversine
 import os.path
 
-from dofinale.views.service_views import gg
+from dofinale.models import Members
 
-bp = Blueprint('chatbot', __name__, url_prefix='/chatbot')
+bp = Blueprint('chatbot', __name__, url_prefix='/chatbot_test')
 
+current_user_table={} # 사용자 아이디 : df 세션 연결하는 테이블
+tmp_list=[] # 큐 자료구조로 선입선출을 위한 변수
+
+# session_user = Members.query.filter_by(id=int(session.get('user_id'))).first()
 
 def get_lat_and_log(address):
     '''
@@ -29,31 +33,60 @@ def get_lat_and_log(address):
         print(address,'에러!!!')
         return (0.0,0.0)
 
+@bp.route('/')
+def index():
+    if session.get('user_id'):
+        global current_user_table, tmp_list
+        tmp_list.append(session.get('user_id'))
+        if tmp_list: # 리스트에 원소 존재 할때
+            print('tmp_list > ', tmp_list)
+            for i, item in enumerate(tmp_list):
+                print('current_user_table(추가 전) >',current_user_table)
+                current_user_table[item] = 'accessed user'  # current_user_table에 추가
+                print('current_user_table(추가 후) >', current_user_table)
+        # print('current_user_table(추가 전) >',current_user_table)
+        # current_user_table[session.get('user_id')] = 'accessed user'  # current_user_table에 추가
+        # print('current_user_table(추가 후) >', current_user_table)
+        return render_template('chatbot_test/chatbot_test.html')
+    else:
+        return "로그인 확인 <br> <a href='https://3da1-112-221-224-124.jp.ngrok.io/auth/login/'>로그인 하러가기</a>"
 
-# Dialogflow 챗봇 Webhook
-@bp.route('/',methods=('POST','GET'))
+
+
+@bp.route('/agent1/',methods=('POST','GET'))
 def chatbot():
-    # 사용자 두피 상태 진단 예측 결과
-    # 사용자가 챗봇에 입력 시 데이터 받기
-    req = request.get_json(force=True)
-    print('접속 성공')
-    try:
-        print("gg>", gg)
-        print('gg[0]', gg[-1])
-        print('gg[0] type', type(gg[-1]))
-        print('gg[0] id', id(gg[-1]))
-        scalp_type_result_all = ''
-        for i in gg:
-            scalp_type_result_all += i+'/'
-        scalp_type_result_all = scalp_type_result_all[:-1]
-        scalp_type_result = gg[-1]
-    except:
-        print('g.user 실패')
-        scalp_type_result = '읽기 실패'
-    print(scalp_type_result)
-    # print(req)  # intent의 display name으로 구분해서 대응하기
-    # print("쿼리텍스트 > "+req['queryResult']['queryText'])
-    # print("인텐트 이름:"+req['queryResult']['intent']['displayName']) # Default Fallback Intent
+    print('chatbot accessed')
+    if request.method == "POST":
+        global current_user_table, tmp_list
+
+        # 사용자가 챗봇에 입력 시 데이터 받기
+        req = request.get_json(force=True)
+
+
+        # df 세션값 저장
+        print("df 세션값 > ",req['session'].split('/')[4])
+
+        df_session=req['session'].split('/')[4]
+
+
+        if tmp_list:
+            # value로 'accessed user' 값을 df 세션값으로 변경
+            # while (len([k for k, v in current_user_table.items() if v == 'accessed user']) > 1):
+            #     print("current_user_table 대기('accessed user') 1개 이상  > ",current_user_table)
+            if len([k for k, v in current_user_table.items() if v == 'accessed user']) > 0: # value 값으로 'accessed user' 존재할 경우
+                print('변경전 > ',current_user_table)
+                # current_user_table[[k for k, v in current_user_table.items() if v == 'accessed user'][0]] = df_session # 접근한 사용자 key에 df 세션을 value로 입력
+                current_user_table[tmp_list[0]] = df_session # 접근한 사용자 key에 df 세션을 value로 입력
+                print('변경후 > ',current_user_table)
+                del tmp_list[0]
+
+        if df_session:
+            # df 세션값 사용자 id 저장
+            print("[k for k, v in current_user_table.items() if v == df_session] > ",[k for k, v in current_user_table.items() if v == df_session])
+            current_user_id=[k for k, v in current_user_table.items() if v == df_session][0] # 현재 df세션 value 값으로 사용자 id인 key값
+            print('current_user_id > ',current_user_id)
+
+    # 각 사용자별 다이얼로그 플로우 세션 값 저장 ----------------------------------------------------------------------------------
 
     if (req['queryResult']['intent']['displayName'] == "Default Welcome Intent"):
         print("접속 인텐트: Default Welcome Intent")
@@ -105,7 +138,7 @@ def chatbot():
                       },
                       {
                         "subtitle": "예측된 두피 진단 결과로 다음과 같은 서비스를 이용해보세요",
-                        "title": "당신의 두피 상태는 '"+ scalp_type_result_all +"'입니다.",
+                        "title": "당신의 두피 상태는 '"+ Members.query.get(current_user_id).scalp_type +"'입니다.",
                         "type": "info"
                       },
                       {
@@ -164,32 +197,32 @@ def chatbot():
                             "title": "브랜드평판지수"
                           },
                           {
-                            "subtitle": products['scalp_type'][scalp_type_result]['브랜드평판지수'][0]['line'],
+                            "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][0]['line'],
                             "image": {
                               "src": {
-                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['브랜드평판지수'][0]['image']
+                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][0]['image']
                               }
                             },
                             "type": "info",
-                            "title": products['scalp_type'][scalp_type_result]['브랜드평판지수'][0]['product_name']
+                            "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][0]['product_name']
                           },
                           {
-                            "subtitle": products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['line'],
+                            "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][1]['line'],
                             "image": {
                               "src": {
-                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['image']
+                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][1]['image']
                               }
                             },
                             "type": "info",
-                            "title": products['scalp_type'][scalp_type_result]['브랜드평판지수'][1]['product_name']
+                            "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][1]['product_name']
                           },
                           {
-                            "subtitle": products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['line'],
+                            "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][2]['line'],
                             "type": "info",
-                            "title": products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['product_name'],
+                            "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][2]['product_name'],
                             "image": {
                               "src": {
-                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['브랜드평판지수'][2]['image']
+                                "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['브랜드평판지수'][2]['image']
                               }
                             }
                           }
@@ -202,32 +235,32 @@ def chatbot():
                           {
                               "image": {
                                   "src": {
-                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][0]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][0]['image']
                                   }
                               },
-                              "title": products['scalp_type'][scalp_type_result]['의사추천'][0]['product_name'],
+                              "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][0]['product_name'],
                               "type": "info",
-                              "subtitle": products['scalp_type'][scalp_type_result]['의사추천'][0]['line']
+                              "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][0]['line']
                           },
                           {
-                              "subtitle": products['scalp_type'][scalp_type_result]['의사추천'][1]['line'],
+                              "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][1]['line'],
                               "image": {
                                   "src": {
-                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][1]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][1]['image']
                                   }
                               },
-                              "title": products['scalp_type'][scalp_type_result]['의사추천'][0]['product_name'],
+                              "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][0]['product_name'],
                               "type": "info"
                           },
                           {
                               "type": "info",
                               "image": {
                                   "src": {
-                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['의사추천'][2]['image']
+                                      "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][2]['image']
                                   }
                               },
-                              "title": products['scalp_type'][scalp_type_result]['의사추천'][2]['product_name'],
-                              "subtitle": products['scalp_type'][scalp_type_result]['의사추천'][2]['line']
+                              "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][2]['product_name'],
+                              "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['의사추천'][2]['line']
                           }
                         ],
                         [
@@ -239,31 +272,31 @@ def chatbot():
                                 "type": "info",
                                 "image": {
                                     "src": {
-                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][0]['image']
                                     }
                                 },
-                                "subtitle": products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['line'],
-                                "title": products['scalp_type'][scalp_type_result]['화해 랭킹순'][0]['product_name']
+                                "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][0]['line'],
+                                "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][0]['product_name']
                             },
                             {
                                 "image": {
                                     "src": {
-                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][1]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][1]['image']
                                     }
                                 },
                                 "type": "info",
-                                "subtitle": products['scalp_type'][scalp_type_result]['화해 랭킹순'][1]['line'],
-                                "title": products['scalp_type'][scalp_type_result]['화해 랭킹순'][1]['product_name']
+                                "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][1]['line'],
+                                "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][1]['product_name']
                             },
                             {
                                 "type": "info",
                                 "image": {
                                     "src": {
-                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['image']
+                                        "rawUrl": url_for('static', filename='images/products/')+products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][2]['image']
                                     }
                                 },
-                                "title": products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['product_name'],
-                                "subtitle": products['scalp_type'][scalp_type_result]['화해 랭킹순'][2]['line'],
+                                "title": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][2]['product_name'],
+                                "subtitle": products['scalp_type'][Members.query.get(current_user_id).scalp_type]['화해 랭킹순'][2]['line'],
                             }
                         ],
                         [

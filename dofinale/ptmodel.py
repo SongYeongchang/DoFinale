@@ -17,7 +17,7 @@ def Image_transformer(img_path):
     return img
 
 
-def Diagnosis(model_path,img_path):
+def Diagnosis(model_path, img_path):
     model_list = os.listdir(model_path)
     img = Image_transformer(img_path)
     pred_dic = {}

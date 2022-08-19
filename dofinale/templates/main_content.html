@@ -1,0 +1,137 @@
+<main class="mt-5">
+      <div class="container w-75 align-itmes-center">
+
+<!--Grid row-->
+      <div class="row py-5">
+        <!--Grid column-->
+
+          <!--Section: Content-->
+
+
+        {% for board in board_list %}
+            <!-- News block -->
+          <div class="col-md-3 mb-4">
+            <!-- Featured image -->
+            <div class="flex-grow-1 bg-image hover-overlay shadow-1-strong ripple rounded-5 mb-4" data-mdb-ripple-color="light">
+              <img src="{{ url_for('static', filename='images/post/'+board.post_set[0].img_upload) }}" class="img-fluid" />
+              <a href="{{ url_for('post.detail', userpost_id=board.post_set[0].id) }}">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
+            </div>
+
+            <!-- Article data -->
+            <div class="row mb-3">
+              <div class="col-6">
+                {% if loop.index==1 %}
+                <a href="{{ url_for('post.detail', userpost_id=board.post_set[0].id) }}" class="text-danger">
+                  <i class="fas fa-comments"></i>
+                  {{ board.board_name }}
+                </a>
+                {% elif loop.index==2 %}
+                <a href="{{ url_for('post.detail', userpost_id=board.post_set[0].id) }}" class="text-warning">
+                  <i class="fas fa-comments"></i>
+                  {{ board.board_name }}
+                </a>
+                {% else %}
+                <a href="{{ url_for('post.detail', userpost_id=board.post_set[0].id) }}" class="text-info">
+                  <i class="fas fa-comments"></i>
+                  {{ board.board_name }}
+                </a>
+                {% endif %}
+              </div>
+
+              <div class="col-6 text-end">
+                <u> {{ board.post_set[0].create_date|datetime }}</u>
+              </div>
+            </div>
+
+            <!-- Article title and description -->
+            <a href="{{ url_for('post.detail', userpost_id=board.post_set[0].id) }}" class="text-dark">
+              <h5><strong>{{ board.post_set[0].subject }}</strong></h5>
+
+              <p class="text-muted">
+                {{ board.post_set[0].content[:100] }}...
+              </p>
+            </a>
+
+            <hr />
+
+            {% for userpost in board.post_set[1:5] %}
+            <!-- News -->
+            <a href="{{ url_for('post.detail', userpost_id=userpost.id) }}" class="text-dark">
+              <div class="row mb-4 border-bottom pb-2">
+                <div class="col-3">
+                  {% if not userpost.img_upload %}
+                    <img src="{{ url_for('static', filename='images/stock/post_sample.jpg') }}"
+                       class="img-fluid shadow-1-strong rounded" alt="" />
+                  {% else %}
+                  <img src="{{ url_for('static', filename='images/post/'+userpost.img_upload) }}"
+                       class="img-fluid shadow-1-strong rounded" alt="" />
+                  {% endif %}
+                </div>
+
+                <div class="col-9">
+                  {% if userpost.subject|length > 28 %}
+                  <p class="mb-2"><strong>{{ userpost.subject[:28] }}...</strong></p>
+                  {% else %}
+                  <p class="mb-2"><strong>{{ userpost.subject }}</strong></p>
+                  {% endif %}
+                  <p>
+                    <u> {{ userpost.create_date|datetime }}</u>
+                  </p>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+
+          </div>
+          <!-- News block -->
+        {% endfor %}
+
+
+
+
+          <!--Section: Content-->
+
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-4">
+          <!--Section: Sidebar-->
+          <section class="sticky-top" style="top: 80px;">
+            <!--Section: Ad-->
+            <section class="text-center border-bottom pb-4 mb-4">
+              <div class="bg-image hover-overlay ripple mb-4">
+                <img
+                  src="https://mblogthumb-phinf.pstatic.net/MjAyMDA5MTZfMjEg/MDAxNjAwMjI1MTE2MTQ3.LKoiEIY06aO9vbCMrvdHukIxkOONyp_RfhX6r3mWmX8g.yDwbTwiBrxUgRTZgpJRzCdAhEX9HinSlSXkCDgSLq1gg.PNG.gsh8600/image.png?type=w800"
+                  class="img-fluid"/>
+                <a href="https://m.blog.naver.com/gsh8600/222090964017" target="_blank">
+                  <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+                </a>
+              </div>
+              <h5>(광고) 홍앤유 클리닉</h5>
+              <p>
+                  소중한 모발 늦지않게 지켜주세요!
+                  여성두피피부과/탈모주사  홍앤유클리닉
+              </p>
+            </section>
+            <!--Section: Ad-->
+
+            <!--Section: Video-->
+            <section class="text-center">
+              <h5 class="mb-4">두피 케어 추천 영상</h5>
+
+              <div class="embed-responsive embed-responsive-16by9 shadow-4-strong">
+                <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/QJhwYpJ89hc"
+                  allowfullscreen></iframe>
+              </div>
+            </section>
+            <!--Section: Video-->
+          </section>
+          <!--Section: Sidebar-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+      </div>
+</main>

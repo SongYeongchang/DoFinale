@@ -1,2 +1,2 @@
-def format_datetime(value, fmt='%Y년 %m월 %d일 %p %I:%M'):
+def format_datetime(value, fmt='%y.%m.%d %H:%M'):
     return value.strftime(fmt)
