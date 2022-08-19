@@ -5,7 +5,7 @@ import functools
 
 from dofinale import db
 from dofinale.forms import UserCreateForm, UserLoginForm
-from dofinale.models import Members
+from dofinale.models import Members, Boards
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -34,6 +34,7 @@ def load_logged_in_user():
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
     form = UserLoginForm()
+    board_list = Boards.query.order_by(Boards.id.asc())
     if request.method == 'POST' and form.validate_on_submit():
         error = None
         user = Members.query.filter_by(userid=form.userid.data).first()
@@ -52,7 +53,7 @@ def login():
             else:
                 return redirect(url_for('main.index'))
         flash(error)
-    return render_template('auth/login.html', form=form, isbgvid=True)
+    return render_template('auth/login.html', board_list=board_list, form=form, isbgvid=True)
 
 
 @bp.route('/logout/')
@@ -65,6 +66,7 @@ def logout():
 @bp.route('/signup/', methods=('GET', 'POST'))
 def signup():
     form = UserCreateForm()
+    board_list = Boards.query.order_by(Boards.id.asc())
     if request.method == 'POST' and form.validate_on_submit():
         user = Members.query.filter_by(userid=form.userid.data).first()
         if not user:
@@ -81,15 +83,16 @@ def signup():
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 유저입니다.')
-    return render_template('auth/signup.html', form=form, isbgvid=True)
+    return render_template('auth/signup.html', board_list=board_list, form=form, isbgvid=True)
 
 
 @bp.route('/delete_user/', methods=('GET', 'POST'))
 def delete_user():
+    board_list = Boards.query.order_by(Boards.id.asc())
     if request.method == 'POST':
         db.session.delete(g.user)
         db.session.commit()
         session.clear()
         print('탈퇴 처리 완료')
         return redirect(url_for('main.index'))
-    return render_template('auth/delete_user.html', isbgvid=True)
+    return render_template('auth/delete_user.html', board_list=board_list, isbgvid=True)

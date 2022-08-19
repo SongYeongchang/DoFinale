@@ -102,9 +102,9 @@ def chatbot():
                                     "accessibilityText": "두피 진단 예측 welcome"
                                 },
                                 {
-                                    "title": f"안녕하세요, 서비스를 이용하려면 로그인해주세요!",
+                                    "title": "안녕하세요, 처음이신가요?",
                                     "type": "info",
-                                    "subtitle": "무엇을 도와드릴까요?"
+                                    "subtitle": "서비스를 이용하려면 로그인해주세요!"
                                 },
                                 {
                                     "options": [
@@ -113,7 +113,7 @@ def chatbot():
                                             "link": url_for('auth.login'),
                                             "image": {
                                                 "src": {
-                                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/key.png?raw=true"
                                                 }
                                             }
                                         }
