@@ -46,7 +46,7 @@ def chatbot():
                       "richContent": [
                         [
                           {
-                            "rawUrl": "https://img.freepik.com/free-vector/chatbot-artificial-intelligence-abstract-concept-illustration_335657-3723.jpg?w=740&t=st=1660823759~exp=1660824359~hmac=1863a0ac158d30806388159e3696d831db9c59bcbe54f6f5d2cf4b6adfa2985f",
+                            "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/AI_robot.jpg?raw=true",
                             "type": "image",
                             "accessibilityText": "두피 진단 예측 welcome"
                           },
@@ -138,38 +138,38 @@ def chatbot():
                         "accessibilityText": "두피 진단 예측"
                       },
                       {
-                        "subtitle": "예측된 두피 진단 결과로 다음과 같은 서비스를 이용해보세요",
-                        "title": "당신의 두피 상태는 '"+ Members.query.get(current_user_id).scalp_type +"'입니다.",
+                        "subtitle": "현재 제공되는 기능은 다음과 같습니다.",
+                        "title": "죄송합니다. 명령을 이해하지 못했어요.",
                         "type": "info"
                       },
                       {
                         "type": "chips",
                         "options": [
-                          {
-                            "image": {
-                              "src": {
-                                "rawUrl": "https://raw.githubusercontent.com/SongYeongchang/DoFinale/master/dofinale/static/images/icons/chatbot.png"
-                              }
+                            {
+                                "text": "AI 두피분석 결과 확인하기",
+                                "image": {
+
+                                    "src": {
+                                        "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/ai.png?raw=true"
+                                    }
+                                }
                             },
-                            "text": "제품 추천 무료로 받기"
-                          },
-                          {
-                            "image": {
-                              "src": {
-                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
-                              }
+                            {
+                                "text": "자가진단 결과 확인하기",
+                                "image": {
+                                    "src": {
+                                        "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/completed-task.png?raw=true"
+                                    }
+                                }
                             },
-                            "text": "가까운 병원 무료로 찾기"
-                          },
-                          {
-                            "link": "https://3323-112-221-224-124.jp.ngrok.io/",
-                            "text": "두피 진단 다시 해보기",
-                            "image": {
-                              "src": {
-                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
-                              }
+                            {
+                                "text": "DooFy에게 위로 받기",
+                                "image": {
+                                    "src": {
+                                        "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/self-love.png?raw=true"
+                                    }
+                                }
                             }
-                          }
                         ]
                       }
                     ]
@@ -269,7 +269,7 @@ def chatbot():
                     "richContent": [
                         [
                             {
-                                "rawUrl": "https://www.sciencetimes.co.kr/wp-content/uploads/2020/10/GettyImages-1222023758-scaled.jpg",
+                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/doctor.jpg?raw=true",
                                 "type": "image",
                                 "accessibilityText": "두피 진단 예측"
                             },
@@ -284,7 +284,7 @@ def chatbot():
                                     {
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://raw.githubusercontent.com/SongYeongchang/DoFinale/master/dofinale/static/images/icons/chatbot.png"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/shampoo.png?raw=true"
                                             }
                                         },
                                         "text": "제품 추천 무료로 받기"
@@ -292,7 +292,7 @@ def chatbot():
                                     {
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/hospital-building.png?raw=true"
                                             }
                                         },
                                         "text": "가까운 병원 무료로 찾기"
@@ -302,7 +302,7 @@ def chatbot():
                                         "text": "두피 진단 다시 해보기",
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/reload.png?raw=true"
                                             }
                                         }
                                     }
@@ -438,7 +438,7 @@ def chatbot():
                                     {
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/hospital-building.png?raw=true"
                                             }
                                         },
                                         "text": "가까운 병원 무료로 찾기"
@@ -448,7 +448,7 @@ def chatbot():
                                         "text": "두피 진단 다시 해보기",
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/reload.png?raw=true"
                                             }
                                         }
                                     }
@@ -553,7 +553,7 @@ def chatbot():
                                     {
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/shampoo.png?raw=true"
                                             }
                                         },
                                         "text": "제품 추천 무료로 받기"
@@ -563,7 +563,7 @@ def chatbot():
                                         "text": "두피 진단 다시 해보기",
                                         "image": {
                                             "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/reload.png?raw=true"
                                             }
                                         }
                                     }
