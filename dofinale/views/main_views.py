@@ -70,7 +70,7 @@ def chatbot():
                                     "text": "자가진단 결과 확인하기",
                                     "image": {
                                         "src": {
-                                            "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                            "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/completed-task.png?raw=true"
                                         }
                                     }
                                 },
@@ -78,7 +78,7 @@ def chatbot():
                                     "text": "DooFy에게 위로 받기",
                                     "image": {
                                         "src": {
-                                            "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+                                            "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/self-love.png?raw=true"
                                         }
                                     }
                                 }
