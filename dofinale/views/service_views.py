@@ -93,12 +93,14 @@ def survey():
         g.user.ml_result = ml_res_str
         db.session.commit()
 
-        return redirect(url_for('service.survey_res', surv_res=surv_res))
+        return redirect(url_for('service.survey_res'))
     return render_template('service/survey.html')
 
 # 자가진단 결과 페이지
 @bp.route('/survey_result/', methods=['GET','POST'])
 def survey_res():
+    if request.method == 'POST':
+        return redirect(url_for('service.survey'))
     return render_template('service/survey_result.html')
 
 

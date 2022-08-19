@@ -133,9 +133,9 @@ def chatbot():
                   "richContent": [
                     [
                       {
-                        "rawUrl": "https://www.sciencetimes.co.kr/wp-content/uploads/2020/10/GettyImages-1222023758-scaled.jpg",
+                        "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/question.jpg?raw=true",
                         "type": "image",
-                        "accessibilityText": "두피 진단 예측"
+                        "accessibilityText": "명령 이해 실패"
                       },
                       {
                         "subtitle": "현재 제공되는 기능은 다음과 같습니다.",
@@ -189,9 +189,9 @@ def chatbot():
                             [
                                 {
                                     "type": "description",
-                                    "title": "고민을 이야기 해주세요",
+                                    "title": "두피 건강 때문에 스트레스를 받고 계신가요?",
                                     "text": [
-                                        "고민, 걱정거리 스트레스 등"
+                                        "힘들 땐 힘들다고 말하세요. 따뜻한 한 마디를 해드릴게요!"
 
                                     ]
                                 }
@@ -223,48 +223,120 @@ def chatbot():
 
     # 자가 진단 결과 확인하기
     if (req['queryResult']['intent']['displayName'] == "survey"):
-        return jsonify(fulfillment_messages=[
-            {
-                "payload": {
-                    "richContent": [
-                        [
-                            {
-                                "rawUrl": "https://www.sciencetimes.co.kr/wp-content/uploads/2020/10/GettyImages-1222023758-scaled.jpg",
-                                "type": "image",
-                                "accessibilityText": "두피 진단 예측"
-                            },
-                            {
-                                "subtitle": "더 정확한 진단 결과를 원하시면, AI분석 서비스를 이용해주세요",
-                                "title": "자가 진단 결과: '" + Members.query.get(current_user_id).ml_result + "'입니다.",
-                                "type": "info"
-                            },
-                            {
-                                "type": "chips",
-                                "options": [
-                                    {
-                                        "link": url_for('service.scalp_diagnosis'),
-                                        "text": "AI 분석 서비스 이용하러 가기",
-                                        "image": {
-                                            "src": {
-                                                "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/chatbot_icon.png?raw=true"
+        if Members.query.get(current_user_id).ml_result == '진단 이력 없음':
+            return jsonify(fulfillment_messages=[
+                {
+                    "payload": {
+                        "richContent": [
+                            [
+                                {
+                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/survey_graphic.jpg?raw=true",
+                                    "type": "image",
+                                    "accessibilityText": "진단 이력 없음"
+                                },
+                                {
+                                    "subtitle": "자가진단 진행 후 이용해주세요!",
+                                    "title": "진단 이력이 없으시군요!",
+                                    "type": "info"
+                                },
+                                {
+                                    "type": "chips",
+                                    "options": [
+                                        {
+                                            "link": url_for('service.survey'),
+                                            "text": "자가진단 하러 가기",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/completed-task.png?raw=true"
+                                                }
                                             }
                                         }
-                                    }
-                                ]
-                            }
+                                    ]
+                                }
+                            ]
                         ]
-                    ]
+                    }
                 }
-            }
-        ])
+            ])
+        else:
+            return jsonify(fulfillment_messages=[
+                {
+                    "payload": {
+                        "richContent": [
+                            [
+                                {
+                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/survey_graphic.jpg?raw=true",
+                                    "type": "image",
+                                    "accessibilityText": "자가진단 결과"
+                                },
+                                {
+                                    "subtitle": "더 정확한 진단 결과를 원하시면, AI 분석 서비스를 이용해주세요",
+                                    "title": "자가 진단 결과: " + Members.query.get(current_user_id).ml_result + " 증상이 의심됩니다.",
+                                    "type": "info"
+                                },
+                                {
+                                    "type": "chips",
+                                    "options": [
+                                        {
+                                            "link": url_for('service.scalp_diagnosis'),
+                                            "text": "AI 분석 서비스 이용하러 가기",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/ai.png?raw=true"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ])
 
 
     # -------------------------------------------------------------------------------------------------
 
     # 진단 결과 확인하기
     if (req['queryResult']['intent']['displayName'] == "scalp type diagnosis"):
-        return jsonify(fulfillment_messages=[
-            {
+        if Members.query.get(current_user_id).scalp_type=='진단 이력 없음':
+            return jsonify(fulfillment_messages=[
+                {
+                    "payload": {
+                        "richContent": [
+                            [
+                                {
+                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/stock/doctor.jpg?raw=true",
+                                    "type": "image",
+                                    "accessibilityText": "진단 이력 없음"
+                                },
+                                {
+                                    "subtitle": "AI 두피 분석 진행 후 다시 시도해주세요!",
+                                    "title": "진단 이력이 없으시군요!",
+                                    "type": "info"
+                                },
+                                {
+                                    "type": "chips",
+                                    "options": [
+                                        {
+                                            "link": url_for('service.scalp_diagnosis'),
+                                            "text": "AI 분석 서비스 이용하러 가기",
+                                            "image": {
+                                                "src": {
+                                                    "rawUrl": "https://github.com/SongYeongchang/DoFinale/blob/master/dofinale/static/images/icons/ai.png?raw=true"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ])
+        else:
+            return jsonify(fulfillment_messages=[
+                {
                 "payload": {
                     "richContent": [
                         [

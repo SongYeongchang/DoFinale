@@ -29,18 +29,18 @@
             <!--본문-->
             <div class="col-md-6 gx-5 mb-4">
 
-              <h4><strong>간단한 설문으로 두피 관리 습관 점검</strong></h4>
-              <p class="text-muted">
-                비듬성, 지루성, 염증성, 탈모성 두피 등 현대인의 다양한 두피 질환이
-                건강하지 못한 생활 습관과 잘못된 두피 관리 방법으로 인해 발생합니다.
-                DoFinale는 총 101,207건에 달하는 사용자들의 생활 습관 데이터를 확보하여
-                간단한 자가 문진을 통해 사용자의 두피 질환 여부를 예측하는 AI 서비스를 제공합니다.
-              </p>
-              <p><strong>어떤 문항을 체크하나요?</strong></p>
-              <p class="text-muted">
-                샴푸 사용 빈도, 펌 및 염색 주기, 사용 중인 두피 및 모발용 제품 등 두피에 영향을 끼칠 수 있는 생활 습관을
-                종합적으로 체크합니다.
-              </p>
+              <h4><strong>자가 진단 결과 : {{ g.user.ml_result }}</strong></h4>
+              <form method="post">
+
+              <!-- Submit button -->
+              <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-lg m-2">
+                <strong>자가 진단 페이지로 돌아가기</strong>
+              </button>
+                </div>
+
+            </form>
+
 
             </div>
           </div>
@@ -48,109 +48,7 @@
         </section>
         <!--Section: End-->
 
-        <!--설문지-->
-        <section>
 
-          <h2 class="px-3"><strong>자가 진단</strong></h2>
-          <hr class="hr" />
-
-            <form method="post">
-
-              <!--성별-->
-              <h4 class="px-3">성별</h4>
-              <div class="ps-5">
-              {% for gender in ['남','여'] %}
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="gender" id="gender{{ loop.index }}" value="{{ gender }}" />
-                  <label class="form-check-label" for="gender{{ loop.index }}">{{ gender }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-
-              <!--연령-->
-              <h4 class="px-3">연령</h4>
-              <div class="ps-5">
-              {% for age in ['10대 이하','20대','30대','40대','50대','60대 이상'] %}
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="age" id="age{{ loop.index }}" value="{{ age }}" />
-                  <label class="form-check-label" for="age{{ loop.index }}">{{ age }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-              <!--샴푸 주기-->
-              <h4 class="px-3">샴푸 주기</h4>
-              <div class="ps-5">
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="frequency_shampoo" id="shampoo1" value="1" />
-                  <label class="form-check-label" for="shampoo1">1일 1회</label>
-                </div>
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="frequency_shampoo" id="shampoo2" value="2" />
-                  <label class="form-check-label" for="shampoo2">1일 2회</label>
-                </div>
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="frequency_shampoo" id="shampoo3" value="0.5" />
-                  <label class="form-check-label" for="shampoo3">2일 1회</label>
-                </div>
-              </div>
-
-              <!--펌 주기-->
-              <h4 class="px-3">펌 주기</h4>
-              <div class="ps-5">
-              {% for perm in ['하지않음','1~3회/연','4~6회/연','7회 이상/연'] %}
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="frequency_perm" id="perm{{ loop.index }}" value="{{ perm }}" />
-                  <label class="form-check-label" for="perm{{ loop.index }}">{{ perm }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-              <!--염색 주기-->
-              <h4 class="px-3">염색 주기</h4>
-              <div class="ps-5">
-              {% for color in ['하지않음','1~3회/연','4~6회/연','7회 이상/연'] %}
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="frequency_color" id="color{{ loop.index }}" value="{{ color }}" />
-                  <label class="form-check-label" for="color{{ loop.index }}">{{ color }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-              <!--현재 모발 상태-->
-              <h4 class="px-3">현재 모발 상태</h4>
-              <div class="ps-5">
-              {% for condition in ['염색 모발','가발','모발이식','기타'] %}
-                <div class="form-check form-check-inline m-3 p-3">
-                  <input class="form-check-input" type="radio" name="hair_condition" id="condition{{ loop.index }}" value="{{ condition }}" />
-                  <label class="form-check-label" for="condition{{ loop.index }}">{{ condition }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-              <!--사용 중인 제품 갯수-->
-              <h4 class="px-3">사용 중인 제품 갯수</h4>
-              <div class="ps-5">
-              <p class="text-muted mt-3">샴푸, 린스, 트리트먼트, 헤어에센스, 두피 세럼, 두피 스케일링제, 헤어 스타일링제 중 해당하는 갯수</p>
-              {% for cnt in range(7) %}
-                <div class="form-check form-check-inline mx-3 pb-3">
-                  <input class="form-check-input" type="radio" name="product" id="cnt{{ loop.index }}" value="{{ loop.index }}" />
-                  <label class="form-check-label" for="cnt{{ loop.index }}">{{ loop.index }}</label>
-                </div>
-              {% endfor %}
-              </div>
-
-              <!-- Submit button -->
-              <div class="text-center">
-              <button type="submit" class="btn btn-primary btn-lg m-2">
-                <strong>제출 및 결과 확인</strong>
-              </button>
-                </div>
-
-            </form>
-
-        </section>
       </div>
     </main>
     <!--Main layout End-->
